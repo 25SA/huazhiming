@@ -1,3 +1,12 @@
+
+const historyData = [
+  {title:"《伟大的转折》",desc:"讲述遵义会议前后，中国共产党在生死存亡关头实现伟大转折的历史进程。",date:"剧集",tag:"影视"},
+  {title:"《走向共和》",desc:"全景展现清末民初中国社会变革，从甲午战争到护法运动，各派力量探索救亡图存之路。",date:"剧集",tag:"影视"},
+  {title:"《历史转折中的邓小平》",desc:"以1976-1984年为背景，展现邓小平带领中国走向改革开放的伟大历程。",date:"剧集",tag:"影视"},
+  {title:"《邓小平时代》—— 傅高义",desc:"西方中国研究代表作，全景式展现邓小平的政治生涯与改革开放决策历程。",date:"书籍",tag:"阅读"},
+  {title:"《中国当代史研究》",desc:"系统梳理当代中国历史脉络，从制度、社会、经济等多维度理解现代中国。",date:"书籍",tag:"阅读"},
+  {title:"《中国共产党历史》",desc:"权威党史读本，系统记述中国共产党从建党到领导现代化建设的百年奋斗历程。",date:"书籍",tag:"阅读"}
+];
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -765,7 +774,7 @@ const tagData = {
   history: {
     title: "历史",
     desc: "「究天人之际，通古今之变，成一家之言。」—— 司马迁",
-    content: ""
+    content: "history"
   },
   politics: {
     title: "时政",
@@ -821,6 +830,18 @@ document.querySelectorAll(".skill-tag").forEach(tag => {
     if (data.content === "politics" && typeof politicsData !== "undefined") {
       html += '<div class="notes-list">';
       politicsData.forEach((n, i) => {
+        html += '<div class="notes-item">' +
+          '<div class="notes-header"><span class="notes-tag">' + n.tag + '</span><span class="notes-date">' + n.date + '</span></div>' +
+          '<div class="notes-title">' + n.title + '</div>' +
+          '<div class="notes-desc">' + n.desc + '</div>' +
+          '</div>';
+      });
+      html += '</div>';
+    }
+
+    if (data.content === "history" && typeof historyData !== "undefined") {
+      html += '<div class="notes-list">';
+      historyData.forEach((n, i) => {
         html += '<div class="notes-item">' +
           '<div class="notes-header"><span class="notes-tag">' + n.tag + '</span><span class="notes-date">' + n.date + '</span></div>' +
           '<div class="notes-title">' + n.title + '</div>' +
