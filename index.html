@@ -596,9 +596,73 @@
     gap: 6px;
   }
 
-  footer a {
+    footer a {
     color: var(--gold-light);
     text-decoration: none;
+  }
+
+  /* Social Lock */
+  .social-locked {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 30px 24px;
+    text-align: center;
+  }
+
+  .social-lock-icon {
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+
+  .social-lock-text {
+    font-size: 14px;
+    color: var(--navy);
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+
+  .social-lock-input-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .social-password-input {
+    padding: 8px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    width: 180px;
+    outline: none;
+    transition: border 0.2s;
+  }
+
+  .social-password-input:focus {
+    border-color: var(--navy);
+  }
+
+  .social-unlock-btn {
+    padding: 8px 20px;
+    background: var(--navy);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .social-unlock-btn:hover {
+    background: var(--navy-light);
+  }
+
+  .social-lock-error {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #e74c3c;
+    min-height: 20px;
   }
 
   @media (max-width: 600px) {
@@ -709,7 +773,16 @@
   <div class="container">
     <div class="section-label">Social</div>
     <h2 class="section-title">社交平台</h2>
-    <div class="social-links">
+    <div class="social-locked" id="socialLocked">
+      <div class="social-lock-icon">🔒</div>
+      <div class="social-lock-text">我的高中</div>
+      <div class="social-lock-input-row">
+        <input type="password" id="socialPassword" class="social-password-input" placeholder="输入答案" autocomplete="off">
+        <button class="social-unlock-btn" onclick="unlockSocial()">验证</button>
+      </div>
+      <div class="social-lock-error" id="socialError"></div>
+    </div>
+    <div class="social-links" id="socialContent" style="display:none;">
       <a href="https://weibo.com/u/7435465898" target="_blank" rel="noopener" class="social-item">
         <span class="social-icon">📱</span>
         <span class="social-name">微博</span>
@@ -895,6 +968,29 @@ function scrollToNote(index) {
     items[index].scrollIntoView({ behavior: "smooth", block: "center" });
   }
 }
+
+function unlockSocial() {
+  const answer = "西乡一中";
+  const input = document.getElementById("socialPassword");
+  const error = document.getElementById("socialError");
+  if (input.value.trim() === answer) {
+    document.getElementById("socialLocked").style.display = "none";
+    document.getElementById("socialContent").style.display = "flex";
+  } else {
+    error.textContent = "答案错误，请重试";
+    input.value = "";
+    input.focus();
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  const pwInput = document.getElementById("socialPassword");
+  if (pwInput) {
+    pwInput.addEventListener("keydown", function(e) {
+      if (e.key === "Enter") unlockSocial();
+    });
+  }
+});
 </script>
 
 </body>
