@@ -665,6 +665,17 @@
     min-height: 20px;
   }
 
+
+  .version-badge {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: rgba(28,58,94,0.08);
+    color: #1C3A5E;
+    margin-top: 12px;
+    letter-spacing: 0.02em;
+  }
   @media (max-width: 600px) {
     .hero h1 { font-size: 34px; }
     .hero .subtitle { font-size: 16px; }
@@ -803,12 +814,12 @@
   <div class="container">
     <span>© 2026 华志明</span>
     <span style="font-size:11px; opacity:0.6;">Built with care</span>
+    <span class="version-badge">v2.1</span>
   </div>
 </footer>
 
 
-<script>
-const photoGallery = [
+<script>const photoGallery = [
   {name:"重庆夜景",src:"images/photo_1.jpg"},
   {name:"黄昏河景",src:"images/photo_2.jpg"},
   {name:"城市江边",src:"images/photo_3.jpg"},
@@ -881,123 +892,133 @@ const tagData = {
   }
 };
 
-const tagDescDiv = document.getElementById("tagDesc");
+try {
+  console.log("HZM v2.1 loading");
 
-document.querySelectorAll(".skill-tag").forEach(tag => {
-  tag.addEventListener("click", function() {
-    document.querySelectorAll(".skill-tag").forEach(t => t.classList.remove("active"));
-    this.classList.add("active");
-    const key = this.dataset.tag;
-    const data = tagData[key];
-    if (!data) return;
+  const tagDescDiv = document.getElementById("tagDesc");
 
-    let html = '<p><strong>' + data.title + '</strong> — ' + data.desc + '</p>';
+  document.querySelectorAll(".skill-tag").forEach(tag => {
+    tag.addEventListener("click", function() {
+      document.querySelectorAll(".skill-tag").forEach(t => t.classList.remove("active"));
+      this.classList.add("active");
+      const key = this.dataset.tag;
+      const data = tagData[key];
+      if (!data) return;
 
-    if (data.content === "gallery" && typeof photoGallery !== "undefined") {
-      html += '<div class="photo-grid">';
-      photoGallery.forEach((p, i) => {
-        html += '<div class="photo-item" onclick="openLightbox(' + i + ')">' +
-          '<img src="' + p.src + '" alt="' + p.name + '" loading="lazy">' +
-          '</div>';
-      });
-      html += '</div>';
-    }
+      let html = '<p><strong>' + data.title + '</strong> — ' + data.desc + '</p>';
 
-    if (data.content === "notes" && typeof notesData !== "undefined") {
-      html += '<div class="notes-list">';
-      notesData.forEach((n, i) => {
-        html += '<div class="notes-item">' +
-          '<div class="notes-header"><span class="notes-tag">' + n.tag + '</span><span class="notes-date">' + n.date + '</span></div>' +
-          '<div class="notes-title">' + n.title + '</div>' +
-          '<div class="notes-desc">' + n.desc + '</div>' +
-          '</div>';
-      });
-      html += '</div>';
-    }
+      if (data.content === "gallery" && typeof photoGallery !== "undefined") {
+        html += '<div class="photo-grid">';
+        photoGallery.forEach((p, i) => {
+          html += '<div class="photo-item" onclick="openLightbox(' + i + ')">' +
+            '<img src="' + p.src + '" alt="' + p.name + '" loading="lazy">' +
+            '</div>';
+        });
+        html += '</div>';
+      }
 
-    if (data.content === "politics" && typeof politicsData !== "undefined") {
-      html += '<div class="notes-list">';
-      politicsData.forEach((n, i) => {
-        html += '<div class="notes-item">' +
-          '<div class="notes-header"><span class="notes-tag">' + n.tag + '</span><span class="notes-date">' + n.date + '</span></div>' +
-          '<div class="notes-title">' + n.title + '</div>' +
-          '<div class="notes-desc">' + n.desc + '</div>' +
-          '</div>';
-      });
-      html += '</div>';
-    }
+      if (data.content === "notes" && typeof notesData !== "undefined") {
+        html += '<div class="notes-list">';
+        notesData.forEach((n, i) => {
+          html += '<div class="notes-item">' +
+            '<div class="notes-header"><span class="notes-tag">' + n.tag + '</span><span class="notes-date">' + n.date + '</span></div>' +
+            '<div class="notes-title">' + n.title + '</div>' +
+            '<div class="notes-desc">' + n.desc + '</div>' +
+            '</div>';
+        });
+        html += '</div>';
+      }
 
-    if (data.content === "history" && typeof historyData !== "undefined") {
-      html += '<div class="notes-list">';
-      historyData.forEach((n, i) => {
-        html += '<div class="notes-item">' +
-          '<div class="notes-header"><span class="notes-tag">' + n.tag + '</span><span class="notes-date">' + n.date + '</span></div>' +
-          '<div class="notes-title">' + n.title + '</div>' +
-          '<div class="notes-desc">' + n.desc + '</div>' +
-          '</div>';
-      });
-      html += '</div>';
-    }
+      if (data.content === "politics" && typeof politicsData !== "undefined") {
+        html += '<div class="notes-list">';
+        politicsData.forEach((n, i) => {
+          html += '<div class="notes-item">' +
+            '<div class="notes-header"><span class="notes-tag">' + n.tag + '</span><span class="notes-date">' + n.date + '</span></div>' +
+            '<div class="notes-title">' + n.title + '</div>' +
+            '<div class="notes-desc">' + n.desc + '</div>' +
+            '</div>';
+        });
+        html += '</div>';
+      }
 
-    if (data.content === "social" && typeof socialData !== "undefined") {
-      html += '<div class="notes-list">';
-      socialData.forEach((n, i) => {
-        html += '<div class="notes-item">' +
-          '<div class="notes-header"><span class="notes-tag">' + n.tag + '</span><span class="notes-date">' + n.date + '</span></div>' +
-          '<div class="notes-title">' + n.title + '</div>' +
-          '<div class="notes-desc">' + n.desc + '</div>' +
-          '</div>';
-      });
-      html += '</div>';
-    }
+      if (data.content === "history" && typeof historyData !== "undefined") {
+        html += '<div class="notes-list">';
+        historyData.forEach((n, i) => {
+          html += '<div class="notes-item">' +
+            '<div class="notes-header"><span class="notes-tag">' + n.tag + '</span><span class="notes-date">' + n.date + '</span></div>' +
+            '<div class="notes-title">' + n.title + '</div>' +
+            '<div class="notes-desc">' + n.desc + '</div>' +
+            '</div>';
+        });
+        html += '</div>';
+      }
 
-    tagDescDiv.innerHTML = html;
-  });
-});
+      if (data.content === "social" && typeof socialData !== "undefined") {
+        html += '<div class="notes-list">';
+        socialData.forEach((n, i) => {
+          html += '<div class="notes-item">' +
+            '<div class="notes-header"><span class="notes-tag">' + n.tag + '</span><span class="notes-date">' + n.date + '</span></div>' +
+            '<div class="notes-title">' + n.title + '</div>' +
+            '<div class="notes-desc">' + n.desc + '</div>' +
+            '</div>';
+        });
+        html += '</div>';
+      }
 
-function openLightbox(index) {
-  if (!photoGallery || !photoGallery[index]) return;
-  const overlay = document.createElement("div");
-  overlay.className = "lightbox-overlay";
-  overlay.onclick = function() { document.body.removeChild(overlay); };
-  overlay.innerHTML = '<div class="lightbox-content" onclick="event.stopPropagation()">' +
-    '<span class="lightbox-close" onclick="document.body.removeChild(this.parentElement.parentElement)">&times;</span>' +
-    '<img src="' + photoGallery[index].src + '" alt="' + photoGallery[index].name + '">' +
-    '<div class="lightbox-name">' + photoGallery[index].name + '</div>' +
-    '</div>';
-  document.body.appendChild(overlay);
-}
-
-function scrollToNote(index) {
-  const items = document.querySelectorAll(".notes-item");
-  if (items && items[index]) {
-    items[index].scrollIntoView({ behavior: "smooth", block: "center" });
-  }
-}
-
-function unlockSocial() {
-  const answer = "xxyz";
-  const input = document.getElementById("socialPassword");
-  const error = document.getElementById("socialError");
-  if (input.value.trim() === answer) {
-    document.getElementById("socialLocked").style.display = "none";
-    document.getElementById("socialContent").style.display = "flex";
-  } else {
-    error.textContent = "答案错误，请重试";
-    input.value = "";
-    input.focus();
-  }
-}
-
-document.addEventListener("DOMContentLoaded", function() {
-  const pwInput = document.getElementById("socialPassword");
-  if (pwInput) {
-    pwInput.addEventListener("keydown", function(e) {
-      if (e.key === "Enter") unlockSocial();
+      tagDescDiv.innerHTML = html;
     });
+  });
+
+  function openLightbox(index) {
+    if (!photoGallery || !photoGallery[index]) return;
+    const overlay = document.createElement("div");
+    overlay.className = "lightbox-overlay";
+    overlay.onclick = function() { document.body.removeChild(overlay); };
+    overlay.innerHTML = '<div class="lightbox-content" onclick="event.stopPropagation()">' +
+      '<span class="lightbox-close" onclick="document.body.removeChild(this.parentElement.parentElement)">&times;</span>' +
+      '<img src="' + photoGallery[index].src + '" alt="' + photoGallery[index].name + '">' +
+      '<div class="lightbox-name">' + photoGallery[index].name + '</div>' +
+      '</div>';
+    document.body.appendChild(overlay);
   }
-});
-</script>
+
+  function scrollToNote(index) {
+    const items = document.querySelectorAll(".notes-item");
+    if (items && items[index]) {
+      items[index].scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }
+
+  function unlockSocial() {
+    const answer = "xxyz";
+    const input = document.getElementById("socialPassword");
+    const error = document.getElementById("socialError");
+    if (input && input.value.trim() === answer) {
+      const locked = document.getElementById("socialLocked");
+      const content = document.getElementById("socialContent");
+      if (locked) locked.style.display = "none";
+      if (content) content.style.display = "flex";
+    } else {
+      if (error) error.textContent = "答案错误，请重试";
+      if (input) { input.value = ""; input.focus(); }
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const pwInput = document.getElementById("socialPassword");
+    if (pwInput) {
+      pwInput.addEventListener("keydown", function(e) {
+        if (e.key === "Enter") unlockSocial();
+      });
+    }
+  });
+
+  console.log("HZM v2.1 OK");
+} catch(e) {
+  console.error("HZM ERROR:", e);
+  var errDiv = document.getElementById("tagDesc");
+  if (errDiv) errDiv.innerHTML = "<p style='color:red;font-size:13px;'>脚本加载异常: " + e.message + "</p>";
+}</script>
 
 </body>
 </html>
