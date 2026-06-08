@@ -743,6 +743,13 @@ const notesData = [
   {title:"重构",desc:"放弃保研，重新出发。历史的指针再次来到这一刻，我又该如何抉择？人生需要一次勇气可嘉的抉择，需要一场酣畅淋漓的战斗。",date:"2025.08",tag:"抉择"},
   {title:"托举",desc:"家族三代的长征。一代人有一代人的使命，父母祖父母最大的托举不在于资源，而是他们的健康。勇敢且真诚，自由而热烈。",date:"2025",tag:"家庭"}
 ];
+const politicsData = [
+  {title:"百年征程结语",desc:"伟大斗争铸就百年辉煌。中国共产党团结带领中国人民走过的百年历程，是忠实践行初心使命的一百年，是筚路蓝缕奠基立业的一百年，是创造辉煌开辟未来的一百年。",date:"党史学习",tag:"党史"},
+  {title:"「十五五」时期重大历史节点",desc:"2026年建党105周年 → 2027年建军100周年 → 2029年建国80周年 → 2035年建成高水平社会主义市场经济体制。历史交汇，继往开来。",date:"政策观察",tag:"规划"},
+  {title:"高举信仰",desc:"高举我们的信仰，战胜一切的欲望。",date:"日常思考",tag:"随笔"}
+];
+
+
 
 const tagData = {
   photo: {
@@ -763,7 +770,7 @@ const tagData = {
   politics: {
     title: "时政",
     desc: "「独立思考，是走出盲从的唯一途径。」—— 顾准",
-    content: ""
+    content: "politics"
   },
   notes: {
     title: "札记",
@@ -802,7 +809,19 @@ document.querySelectorAll(".skill-tag").forEach(tag => {
     if (data.content === "notes" && typeof notesData !== "undefined") {
       html += '<div class="notes-list">';
       notesData.forEach((n, i) => {
-        html += '<div class="notes-item" onclick="scrollToNote(' + i + ')">' +
+        html += '<div class="notes-item">' +
+          '<div class="notes-header"><span class="notes-tag">' + n.tag + '</span><span class="notes-date">' + n.date + '</span></div>' +
+          '<div class="notes-title">' + n.title + '</div>' +
+          '<div class="notes-desc">' + n.desc + '</div>' +
+          '</div>';
+      });
+      html += '</div>';
+    }
+
+    if (data.content === "politics" && typeof politicsData !== "undefined") {
+      html += '<div class="notes-list">';
+      politicsData.forEach((n, i) => {
+        html += '<div class="notes-item">' +
           '<div class="notes-header"><span class="notes-tag">' + n.tag + '</span><span class="notes-date">' + n.date + '</span></div>' +
           '<div class="notes-title">' + n.title + '</div>' +
           '<div class="notes-desc">' + n.desc + '</div>' +
