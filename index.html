@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>华志明 · 个人主页</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --navy: #1C3A5E;
+    --navy-light: #2C5A8E;
+    --navy-dark: #0F2440;
+    --gold: #C9A84C;
+    --gold-light: #E8D28A;
+    --text: #1A1A1A;
+    --text-muted: #6B7B8D;
+    --bg: #FFFFFF;
+    --section-bg: #F5F6F8;
+    --section-alt: #F0F1F5;
+    --border: #E8ECF0;
+    --shadow: rgba(28, 58, 94, 0.06);
+    --shadow-hover: rgba(28, 58, 94, 0.12);
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 0;
+    position: relative;
+    background: linear-gradient(160deg, #FFFFFF 0%, #F0F3F8 50%, #E8EDF5 100%);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse at 20% 50%, rgba(28, 58, 94, 0.03) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(201, 168, 76, 0.04) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .hero .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-avatar {
+    width: 104px;
+    height: 104px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 32px;
+    border: 3px solid #fff;
+    box-shadow: 0 4px 20px var(--shadow-hover);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .hero-avatar:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 28px var(--shadow-hover);
+  }
+
+  .hero-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero h1 {
+    font-size: 48px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 8px;
+    color: var(--navy-dark);
+  }
+
+  .hero .subtitle {
+    font-size: 18px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  .hero .subtitle-secondary {
+    font-size: 15px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+
+  .hero .divider {
+    width: 40px;
+    height: 3px;
+    background: var(--gold);
+    border-radius: 2px;
+    margin: 16px 0 20px 0;
+  }
+
+  .hero .tagline {
+    font-size: 15px;
+    color: var(--text-muted);
+    max-width: 500px;
+    line-height: 1.9;
+  }
+
+  .hero .tagline em {
+    font-style: normal;
+    color: var(--navy);
+    font-weight: 500;
+  }
+
+  /* Sections */
+  section {
+    padding: 72px 0;
+    position: relative;
+  }
+
+  section:nth-child(even) {
+    background: var(--section-bg);
+  }
+
+  section:nth-child(odd):not(:first-of-type) {
+    background: var(--bg);
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .section-title {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--navy-dark);
+    letter-spacing: -0.01em;
+    margin-bottom: 36px;
+    position: relative;
+  }
+
+  .section-title::after {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 1px;
+    margin-top: 10px;
+  }
+
+  /* Education */
+  .edu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .edu-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 8px 16px;
+    padding: 20px 24px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+  }
+
+  .edu-item:hover {
+    box-shadow: 0 4px 16px var(--shadow);
+    transform: translateY(-2px);
+  }
+
+  .edu-item .school {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .edu-item .period {
+    font-size: 13px;
+    color: var(--gold);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .edu-item .major {
+    font-size: 14px;
+    color: var(--text-muted);
+    width: 100%;
+    margin-top: 2px;
+  }
+
+  /* Experience */
+  .exp-item {
+    padding: 20px 24px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+  }
+
+  .exp-item:hover {
+    box-shadow: 0 4px 16px var(--shadow);
+    transform: translateY(-2px);
+  }
+
+  .exp-item .exp-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .exp-item .exp-period {
+    font-size: 12px;
+    color: var(--gold);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .exp-item .exp-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .exp-item .exp-tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 10px;
+    border-radius: 20px;
+    background: rgba(28, 58, 94, 0.07);
+    color: var(--navy);
+    margin-top: 8px;
+    margin-right: 6px;
+  }
+
+  /* Skills / Tags */
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .skill-tag {
+    font-size: 13px;
+    padding: 6px 16px;
+    border-radius: 20px;
+    background: #fff;
+    border: 1px solid var(--border);
+    color: var(--text);
+    transition: all 0.2s ease;
+    cursor: default;
+  }
+
+  .skill-tag:hover {
+    background: var(--navy);
+    color: #fff;
+    border-color: var(--navy);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(28, 58, 94, 0.2);
+  }
+
+  /* Contact */
+  .contact-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+  }
+
+  .contact-card:hover {
+    box-shadow: 0 6px 24px var(--shadow-hover);
+    transform: translateY(-2px);
+  }
+
+  .contact-card-body {
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .contact-email-icon-centered {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .contact-email-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .contact-email-text {
+    font-family: "SF Mono", "Fira Code", "Courier New", monospace;
+    font-size: 13px;
+    color: var(--navy-dark);
+    letter-spacing: 0.01em;
+    user-select: all;
+    padding: 4px 0;
+  }
+
+  .contact-email-text:hover {
+    color: var(--navy-light);
+  }
+
+
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 36px 0;
+    font-size: 12px;
+    color: var(--text-muted);
+    background: var(--navy-dark);
+    color: rgba(255,255,255,0.5);
+  }
+
+  footer .container {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  footer a {
+    color: var(--gold-light);
+    text-decoration: none;
+  }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 34px; }
+    .hero .subtitle { font-size: 16px; }
+    .section-title { font-size: 24px; }
+    .exp-item .exp-period { white-space: normal; }
+  }</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="container">
+    <div class="hero-avatar">
+      <img src="data:image/jpeg;base64,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" alt="华志明">
+    </div>
+    <h1>华志明</h1>
+    <p class="subtitle">兰州大学 · 法律硕士</p>
+    <p class="subtitle-secondary">天津财经大学 · 本科</p>
+    <p class="tagline">我与我，周旋久，宁做我。</p>
+  </div>
+</div>
+
+<!-- Education -->
+<section>
+  <div class="container">
+    <div class="section-label">Education</div>
+    <h2 class="section-title">教育经历</h2>
+    <div class="edu-list">
+      <div class="edu-item">
+        <div class="school">兰州大学</div>
+        <div class="period">2026至今</div>
+        <div class="major">法律硕士</div>
+      </div>
+      <div class="edu-item">
+        <div class="school">天津财经大学</div>
+        <div class="period">2021 – 2025</div>
+        <div class="major">本科</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Experience -->
+<section>
+  <div class="container">
+    <div class="section-label">Experience</div>
+    <h2 class="section-title">实践经历</h2>
+    <div class="exp-list">
+      <div class="exp-item">
+        <div class="exp-title">华南校友行活动</div>
+        <div class="exp-period">2024年7月</div>
+        <div class="exp-desc">参与校友走访与交流活动，拓展视野，增进校际联络。</div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-title">赴新疆和田实习支教</div>
+        <div class="exp-period">2023年9月 – 12月</div>
+        <div class="exp-desc">赴新疆和田地区参与实习支教，承担教学工作，在民族地区教育一线积累了跨文化沟通与基层实践经验。</div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-title">疫情防控志愿者</div>
+        <div class="exp-period">2022 – 2023</div>
+        <div class="exp-desc">参与社区疫情防控志愿服务，负责信息登记、物资分发等一线工作。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Skills -->
+<section>
+  <div class="container">
+    <div class="section-label">About Me</div>
+    <h2 class="section-title">生活标签</h2>
+    <div class="skill-tags">
+      <span class="skill-tag">阅读</span>
+      <span class="skill-tag">时事</span>
+      <span class="skill-tag">写作</span>
+      <span class="skill-tag">志愿服务</span>
+      <span class="skill-tag">历史</span>
+      <span class="skill-tag">法律</span>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section>
+  <div class="container">
+    <div class="section-label">Contact</div>
+    <h2 class="section-title">联系方式</h2>
+        <div class="contact-card">
+      <div class="contact-card-body">
+        <div class="contact-email-icon-centered">
+          <span class="contact-email-icon">✉</span>
+        </div>
+        <div class="contact-email-list">
+          <div class="contact-email-text">2290617364@qq.com</div>
+          <div class="contact-email-text">32b5b5cb2335@gmail.com</div>
+        </div>
+      </div>
+    </div></section>
+
+<footer>
+  <div class="container">
+    <span>© 2026 华志明</span>
+    <span style="font-size:11px; opacity:0.6;">Built with care</span>
+  </div>
+</footer>
+
+</body>
+</html>
