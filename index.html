@@ -281,7 +281,8 @@
     border: 1px solid var(--border);
     color: var(--text);
     transition: all 0.2s ease;
-    cursor: default;
+    cursor: pointer;
+    user-select: none;
   }
 
   .skill-tag:hover {
@@ -290,6 +291,38 @@
     border-color: var(--navy);
     transform: translateY(-1px);
     box-shadow: 0 2px 8px rgba(28, 58, 94, 0.2);
+  }
+
+  .skill-tag.active {
+    background: var(--navy);
+    color: #fff;
+    border-color: var(--navy);
+  }
+
+  .tag-desc {
+    margin-top: 20px;
+    padding: 16px 20px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.8;
+    min-height: 60px;
+    transition: all 0.3s ease;
+  }
+
+  .tag-desc p {
+    margin: 0;
+  }
+
+  .tag-desc .tag-hint {
+    display: block;
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--gold);
+    font-weight: 500;
+    letter-spacing: 0.02em;
   }
 
   /* Contact */
@@ -515,12 +548,15 @@
     <div class="section-label">About Me</div>
     <h2 class="section-title">生活标签</h2>
     <div class="skill-tags">
-      <span class="skill-tag">摄影</span>
-      <span class="skill-tag">纪录</span>
-      <span class="skill-tag">历史</span>
-      <span class="skill-tag">时政</span>
-      <span class="skill-tag">札记</span>
-      <span class="skill-tag">社科</span>
+      <span class="skill-tag" data-tag="photo">📷 摄影</span>
+      <span class="skill-tag" data-tag="docu">🎬 纪录</span>
+      <span class="skill-tag" data-tag="history">📜 历史</span>
+      <span class="skill-tag" data-tag="politics">🌐 时政</span>
+      <span class="skill-tag" data-tag="notes">📝 札记</span>
+      <span class="skill-tag" data-tag="social">📚 社科</span>
+    </div>
+    <div class="tag-desc" id="tagDesc">
+      <p>点击标签了解我的兴趣方向</p>
     </div>
   </div>
 </section>
@@ -571,6 +607,56 @@
     <span style="font-size:11px; opacity:0.6;">Built with care</span>
   </div>
 </footer>
+
+
+<script>
+const tagData = {
+  photo: {
+    title: "摄影",
+    desc: "喜欢用镜头记录日常，捕捉光影里的瞬间。",
+    hint: "📷 后续可展示摄影作品集"
+  },
+  docu: {
+    title: "纪录",
+    desc: "关注真实的人和事，纪录片是观察世界的一扇窗。",
+    hint: "🎬 后续可整理纪录片推荐"
+  },
+  history: {
+    title: "历史",
+    desc: "读史使人明智，从过去理解现在。",
+    hint: "📜 后续可写历史读书笔记"
+  },
+  politics: {
+    title: "时政",
+    desc: "关注国内外时事，保持独立思考。",
+    hint: "🌐 后续可发布时评分析"
+  },
+  notes: {
+    title: "札记",
+    desc: "日常随笔，记录所思所想。",
+    hint: "📝 后续可发布随笔文集"
+  },
+  social: {
+    title: "社科",
+    desc: "对社会运作的逻辑感兴趣，爱读社科类书籍。",
+    hint: "📚 后续可整理书单与读书笔记"
+  }
+};
+
+document.querySelectorAll(".skill-tag").forEach(tag => {
+  tag.addEventListener("click", function() {
+    document.querySelectorAll(".skill-tag").forEach(t => t.classList.remove("active"));
+    this.classList.add("active");
+    const key = this.dataset.tag;
+    const data = tagData[key];
+    if (data) {
+      document.getElementById("tagDesc").innerHTML =
+        '<p><strong>' + data.title + '</strong> — ' + data.desc + '</p>' +
+        '<span class="tag-hint">' + data.hint + '</span>';
+    }
+  });
+});
+</script>
 
 </body>
 </html>
