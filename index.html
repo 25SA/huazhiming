@@ -1,4 +1,11 @@
 
+const socialData = [
+  {title:"《乡土中国》—— 费孝通",desc:"中国社会学的经典之作。从差序格局到礼俗社会，剖析中国传统乡村社会的结构与变迁。",date:"已读",tag:"社会学"},
+  {title:"《置身事内》—— 兰小欢",desc:"理解中国经济发展与政府行为的入门佳作。从微观机制到宏观现象，解读"中国模式"。",date:"已读",tag:"经济学"},
+  {title:"《激荡三十年》—— 吴晓波",desc:"中国企业史的宏大叙事。1978-2008，三十年改革浪潮中，企业家的沉浮与时代共舞。",date:"已读",tag:"经济史"},
+  {title:"《筚路维艰》—— 萧冬连",desc:"中国社会主义路径的五次选择。从新民主主义到改革开放，理解当代中国转型的艰难历程。",date:"已读",tag:"政治史"}
+];
+
 const historyData = [
   {title:"《伟大的转折》",desc:"讲述遵义会议前后，中国共产党在生死存亡关头实现伟大转折的历史进程。",date:"剧集",tag:"影视"},
   {title:"《走向共和》",desc:"全景展现清末民初中国社会变革，从甲午战争到护法运动，各派力量探索救亡图存之路。",date:"剧集",tag:"影视"},
@@ -682,7 +689,6 @@ const historyData = [
     <h2 class="section-title">生活标签</h2>
     <div class="skill-tags">
       <span class="skill-tag" data-tag="photo">📷 摄影</span>
-      <span class="skill-tag" data-tag="docu">🎬 纪录</span>
       <span class="skill-tag" data-tag="history">📜 历史</span>
       <span class="skill-tag" data-tag="politics">🌐 时政</span>
       <span class="skill-tag" data-tag="notes">📝 札记</span>
@@ -766,11 +772,7 @@ const tagData = {
     desc: "「决定性瞬间」—— 布列松",
     content: "gallery"
   },
-  docu: {
-    title: "纪录",
-    desc: "「纪录片是对现实的创造性处理。」—— 约翰·格里尔逊",
-    content: ""
-  },
+
   history: {
     title: "历史",
     desc: "「究天人之际，通古今之变，成一家之言。」—— 司马迁",
@@ -842,6 +844,18 @@ document.querySelectorAll(".skill-tag").forEach(tag => {
     if (data.content === "history" && typeof historyData !== "undefined") {
       html += '<div class="notes-list">';
       historyData.forEach((n, i) => {
+        html += '<div class="notes-item">' +
+          '<div class="notes-header"><span class="notes-tag">' + n.tag + '</span><span class="notes-date">' + n.date + '</span></div>' +
+          '<div class="notes-title">' + n.title + '</div>' +
+          '<div class="notes-desc">' + n.desc + '</div>' +
+          '</div>';
+      });
+      html += '</div>';
+    }
+
+    if (data.content === "social" && typeof socialData !== "undefined") {
+      html += '<div class="notes-list">';
+      socialData.forEach((n, i) => {
         html += '<div class="notes-item">' +
           '<div class="notes-header"><span class="notes-tag">' + n.tag + '</span><span class="notes-date">' + n.date + '</span></div>' +
           '<div class="notes-title">' + n.title + '</div>' +
