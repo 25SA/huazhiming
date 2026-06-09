@@ -1526,12 +1526,13 @@ function renderSchoolContent(school) {
       var item = photos[i];
       var el = document.createElement('div');
       el.className = 'mem-item';
-      el.innerHTML = '<img src="' + item.src + '" alt="" loading="lazy">';
+      el.innerHTML = '<div class="lazy-img" data-src="' + item.src + '" style="background:#eef1f5;min-height:150px;display:flex;align-items:center;justify-content:center;color:#999;font-size:12px;border-radius:6px">加载中…</div>';
       pgrid.appendChild(el);
     }
   } else {
     document.getElementById('memoriesPhotos').style.display = 'none';
   }
+  setTimeout(lazyLoadObserve, 100);
 }
 
 function showMemories(school) {
