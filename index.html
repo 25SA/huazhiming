@@ -810,10 +810,10 @@
       <div class="tl-track"></div>
       <div class="tl-dot tl-dot-top"></div>
       <div class="tl-item" onclick="showMemories('兰州大学')">
-        <div class="tl-left"><span class="tl-year">2026 – </span></div>
+        <div class="tl-left"></div>
         <div class="tl-right">
           <div class="tl-school">兰州大学</div>
-          <div class="tl-detail">法律硕士</div>
+          <div class="tl-detail">法律硕士 · 在读</div>
         </div>
       </div>
       <div class="tl-item" onclick="showMemories('天津财经大学')">
@@ -842,8 +842,23 @@
     <!-- Memories area -->
     <div class="memories-area" id="memoriesArea" style="display:none">
       <div class="memories-label" id="memoriesLabel">🏫 回忆 · <span id="memoriesSchool"></span></div>
-      <div class="memories-grid" id="memoriesGrid">
-        <!-- Memory items loaded dynamically -->
+      <div id="memoriesUnlock" style="display:none;padding:20px 0">
+        <div class="form-group" style="margin-bottom:10px">
+          <label id="unlockQuestion" style="font-size:14px;font-weight:600;color:#333"></label>
+          <div style="display:flex;gap:8px;margin-top:6px">
+            <input type="text" id="unlockAnswer" style="flex:1;padding:8px 12px;border:1px solid #ddd;border-radius:6px;font-size:14px;outline:none" placeholder="输入答案" />
+            <button onclick="checkUnlock()" style="padding:8px 20px;background:#1C3A5E;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px">解锁</button>
+          </div>
+          <div id="unlockErr" style="color:#e74c3c;font-size:12px;display:none;margin-top:4px">答案错误，再想想</div>
+        </div>
+      </div>
+      <div class="memories-section" id="memoriesVideos" style="display:none">
+        <div style="font-size:14px;font-weight:600;color:#1C3A5E;margin-bottom:8px">🎬 视频</div>
+        <div class="memories-grid" id="memoriesGridVideo"></div>
+      </div>
+      <div class="memories-section" id="memoriesPhotos" style="display:none">
+        <div style="font-size:14px;font-weight:600;color:#1C3A5E;margin-bottom:8px">📷 照片</div>
+        <div class="memories-grid" id="memoriesGridPhoto"></div>
       </div>
       <div class="memories-empty" id="memoriesEmpty">
         <p>还没有添加内容，由你提供 📸</p>
@@ -1267,35 +1282,114 @@ function toggleTheme() {
   }
 }
 
+// 各学校解锁权限配置
+var schoolLocks = {
+  "西乡第五中学": {question:"我的班级", answer:"16"},
+  "西乡第一中学": {question:"我的班主任", answer:"hr"},
+  "天津财经大学": {question:"我的床铺号", answer:"1"},
+  "兰州大学": null
+};
+
+var unlockedSchools = {};
+
+try {
+  var saved = localStorage.getItem('huazhiming_unlocked');
+  if (saved) unlockedSchools = JSON.parse(saved);
+} catch(e){}
+
+function saveUnlocked() {
+  localStorage.setItem('huazhiming_unlocked', JSON.stringify(unlockedSchools));
+}
+
+function checkUnlock() {
+  var school = document.getElementById('memoriesSchool').textContent;
+  var answer = document.getElementById('unlockAnswer').value.trim().toLowerCase();
+  var lock = schoolLocks[school];
+  if (lock && answer === lock.answer) {
+    unlockedSchools[school] = true;
+    saveUnlocked();
+    document.getElementById('memoriesUnlock').style.display = 'none';
+    document.getElementById('unlockErr').style.display = 'none';
+    renderSchoolContent(school);
+  } else {
+    document.getElementById('unlockErr').style.display = 'block';
+  }
+}
+
+function renderSchoolContent(school) {
+  var data = window.schoolMemories[school] || [];
+  var videos = data.filter(function(i){return i.type==='video'});
+  var photos = data.filter(function(i){return i.type==='image'});
+  var empty = document.getElementById('memoriesEmpty');
+
+  if (data.length === 0) {
+    document.getElementById('memoriesVideos').style.display = 'none';
+    document.getElementById('memoriesPhotos').style.display = 'none';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  // Videos
+  var vgrid = document.getElementById('memoriesGridVideo');
+  vgrid.innerHTML = '';
+  if (videos.length > 0) {
+    document.getElementById('memoriesVideos').style.display = 'block';
+    for (var i = 0; i < videos.length; i++) {
+      var item = videos[i];
+      var el = document.createElement('div');
+      el.className = 'mem-item';
+      var creditHtml = item.credit ? '<div style="font-size:12px;color:#999;margin-top:4px">' + item.credit + '</div>' : '';
+      el.innerHTML = '<video src="' + item.src + '" controls></video>' + creditHtml;
+      vgrid.appendChild(el);
+    }
+  } else {
+    document.getElementById('memoriesVideos').style.display = 'none';
+  }
+
+  // Photos
+  var pgrid = document.getElementById('memoriesGridPhoto');
+  pgrid.innerHTML = '';
+  if (photos.length > 0) {
+    document.getElementById('memoriesPhotos').style.display = 'block';
+    for (var i = 0; i < photos.length; i++) {
+      var item = photos[i];
+      var el = document.createElement('div');
+      el.className = 'mem-item';
+      el.innerHTML = '<img src="' + item.src + '" alt="" loading="lazy">';
+      pgrid.appendChild(el);
+    }
+  } else {
+    document.getElementById('memoriesPhotos').style.display = 'none';
+  }
+}
+
 function showMemories(school) {
   var area = document.getElementById('memoriesArea');
   var label = document.getElementById('memoriesSchool');
-  var grid = document.getElementById('memoriesGrid');
   var empty = document.getElementById('memoriesEmpty');
-  var data = window.schoolMemories[school] || [];
+  var unlockDiv = document.getElementById('memoriesUnlock');
+
   label.textContent = school;
-  grid.innerHTML = '';
-  if (data.length > 0) {
-    empty.style.display = 'none';
-    grid.style.display = 'grid';
-    for (var i = 0; i < data.length; i++) {
-      var item = data[i];
-      var el = document.createElement('div');
-      el.className = 'mem-item';
-      if (item.type === 'image') {
-        el.innerHTML = '<img src="' + item.src + '" alt="" loading="lazy" onclick="openLightboxMem(' + i + ',\'' + school + '\')">';
-      } else if (item.type === 'video') {
-        var creditHtml = item.credit ? '<div style="font-size:12px;color:#999;margin-top:4px">' + item.credit + '</div>' : '';
-        el.innerHTML = '<video src="' + item.src + '" controls></video>' + creditHtml;
-      }
-      grid.appendChild(el);
-    }
+
+  var lock = schoolLocks[school];
+
+  // 如果已经解锁，直接显示内容
+  if (unlockedSchools[school] || !lock) {
+    unlockDiv.style.display = 'none';
+    renderSchoolContent(school);
   } else {
-    empty.style.display = 'block';
-    grid.style.display = 'none';
+    // 需要解锁
+    document.getElementById('memoriesVideos').style.display = 'none';
+    document.getElementById('memoriesPhotos').style.display = 'none';
+    empty.style.display = 'none';
+    document.getElementById('unlockQuestion').textContent = '🔒 ' + lock.question;
+    document.getElementById('unlockAnswer').value = '';
+    document.getElementById('unlockErr').style.display = 'none';
+    unlockDiv.style.display = 'block';
   }
+
   area.style.display = 'block';
-  // Scroll to the memories area
   area.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
