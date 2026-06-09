@@ -666,6 +666,40 @@
   }
 
 
+  /* Notes expand/collapse */
+  .notes-desc { cursor: pointer; transition: max-height 0.3s ease; }
+  .notes-desc.collapsed {
+    max-height: 3em;
+    overflow: hidden;
+    position: relative;
+  }
+  .notes-desc.collapsed::after {
+    content: '… 点击展开全文';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(to left, var(--bg), transparent);
+    padding: 0 6px 0 10px;
+    color: var(--navy-light);
+    font-size: 13px;
+    cursor: pointer;
+    pointer-events: none;
+  }
+  .notes-desc.expanded { max-height: none; }
+  .notes-desc.expanded::after { content: none; }
+
+  .politics-img {
+    margin-top: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .politics-img img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+  }
+
   .version-badge {
     display: inline-block;
     font-size: 10px;
@@ -749,7 +783,7 @@
     <div class="section-label">About Me</div>
     <h2 class="section-title">生活标签</h2>
     <div class="skill-tags">
-      <span class="skill-tag" onclick="handleTag('photo')" data-tag="photo">📷 摄影</span>
+      <span class="skill-tag" onclick="handleTag('photo')" data-tag="photo">📸 记录</span>
       <span class="skill-tag" onclick="handleTag('history')" data-tag="history">📜 历史</span>
       <span class="skill-tag" onclick="handleTag('politics')" data-tag="politics">🌐 时政</span>
       <span class="skill-tag" onclick="handleTag('notes')" data-tag="notes">📝 札记</span>
@@ -825,7 +859,10 @@
   {name:"黄昏河景",src:"images/photo_2.jpg"},
   {name:"城市江边",src:"images/photo_3.jpg"},
   {name:"水流特写",src:"images/photo_4.jpg"},
-  {name:"汉中乡村",src:"images/photo_5.jpg"}
+  {name:"汉中乡村",src:"images/photo_5.jpg"},
+  {name:"汉中远山",src:"images/record_1.jpg"},
+  {name:"城市街景",src:"images/record_2.jpg"},
+  {name:"山谷俯瞰",src:"images/record_3.jpg"}
 ]
 
 window.notesData = [
@@ -855,10 +892,10 @@ window.socialData = [
 ];
 
 window.politicsData = [
-  {title:"百年征程结语",desc:"伟大斗争铸就百年辉煌。中国共产党团结带领中国人民走过的百年历程，是忠实践行初心使命的一百年，是筚路蓝缕奠基立业的一百年，是创造辉煌开辟未来的一百年。",date:"党史学习",tag:"党史"},
-  {title:"「十五五」时期重大历史节点",desc:"2026年建党105周年 → 2027年建军100周年 → 2029年建国80周年 → 2035年建成高水平社会主义市场经济体制。历史交汇，继往开来。",date:"政策观察",tag:"规划"},
+  {title:"百年征程结语",desc:"伟大斗争铸就百年辉煌。中国共产党团结带领中国人民走过的百年历程，是忠实践行初心使命的一百年，是筚路蓝缕奠基立业的一百年，是创造辉煌开辟未来的一百年。",date:"党史学习",tag:"党史",img:"images/record_2.jpg"},
+  {title:"「十五五」时期重大历史节点",desc:"2026年建党105周年 → 2027年建军100周年 → 2029年建国80周年 → 2035年建成高水平社会主义市场经济体制。历史交汇，继往开来。",date:"政策观察",tag:"规划",img:"images/record_1.jpg"},
   {title:"思辨四则",desc:"不掩盖实际问题，不否定发展成果，不进行人身攻击，不盲目随波逐流。",date:"日常思考",tag:"思辨"},
-  {title:"行则将至",desc:"路虽远，行则将至；事虽难，做则必成；梦虽遥，追则能达；愿虽艰，持则可圆。",date:"日常思考",tag:"共勉"},
+  {title:"行则将至",desc:"路虽远，行则将至；事虽难，做则必成；梦虽遥，追则能达；愿虽艰，持则可圆。",date:"日常思考",tag:"共勉",img:"images/record_3.jpg"},
   {title:"高举信仰",desc:"高举我们的信仰，战胜一切的欲望。",date:"日常思考",tag:"随笔"}
 ];
 
@@ -866,8 +903,8 @@ window.politicsData = [
 
 window.tagData = {
   photo: {
-    title: "摄影",
-    desc: "「决定性瞬间」—— 布列松",
+    title: "记录",
+    desc: "「用镜头留住时光，让瞬间成为永恒。」",
     content: "gallery"
   },
 
@@ -928,10 +965,12 @@ function handleTag(key) {
     html += '<div class="notes-list">';
     for (var i = 0; i < arr.length; i++) {
       var n = arr[i];
+      var longDesc = n.desc.length > 50;
       html += '<div class="notes-item">' +
         '<div class="notes-header"><span class="notes-tag">' + n.tag + '</span><span class="notes-date">' + n.date + '</span></div>' +
         '<div class="notes-title">' + n.title + '</div>' +
-        '<div class="notes-desc">' + n.desc + '</div>' +
+        '<div class="notes-desc' + (longDesc ? ' collapsed' : '') + '" onclick="if(this.classList.contains(\'collapsed\')){this.classList.remove(\'collapsed\');this.classList.add(\'expanded\');}else{void(0);}">' + n.desc + '</div>' +
+        (n.img ? '<div class="politics-img"><img src="' + n.img + '" alt="" loading="lazy"></div>' : '') +
         '</div>';
     }
     html += '</div>';
