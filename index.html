@@ -834,28 +834,28 @@
       <div class="tl-item" onclick="showMemories('兰州大学')">
         <div class="tl-left"></div>
         <div class="tl-right">
-          <div class="tl-school">兰州大学</div>
+          <div class="tl-school">兰州大学 <span class="exp-toggle">▶</span></div>
           <div class="tl-detail">法律硕士 · 在读</div>
         </div>
       </div>
       <div class="tl-item" onclick="showMemories('天津财经大学')">
         <div class="tl-left"><span class="tl-year">2021 – 2025</span></div>
         <div class="tl-right">
-          <div class="tl-school">天津财经大学</div>
+          <div class="tl-school">天津财经大学 <span class="exp-toggle">▶</span></div>
           <div class="tl-detail">本科</div>
         </div>
       </div>
       <div class="tl-item" onclick="showMemories('西乡第一中学')">
         <div class="tl-left"><span class="tl-year">2018 – 2021</span></div>
         <div class="tl-right">
-          <div class="tl-school">西乡第一中学</div>
+          <div class="tl-school">西乡第一中学 <span class="exp-toggle">▶</span></div>
           <div class="tl-detail">高中</div>
         </div>
       </div>
       <div class="tl-item" onclick="showMemories('西乡第五中学')">
         <div class="tl-left"><span class="tl-year">2015 – 2018</span></div>
         <div class="tl-right">
-          <div class="tl-school">西乡第五中学</div>
+          <div class="tl-school">西乡第五中学 <span class="exp-toggle">▶</span></div>
           <div class="tl-detail">初中</div>
         </div>
       </div>
@@ -895,10 +895,19 @@
     <div class="section-label">Experience</div>
     <h2 class="section-title">实践经历</h2>
     <div class="exp-list">
-      <div class="exp-item" onclick="toggleExpPhotos(this)">
+      <div class="exp-item" onclick="toggleExpPhotos(this)" data-exp="huanan">
         <div class="exp-title">华南校友行活动 <span class="exp-toggle">▶</span></div>
         <div class="exp-period">2024年7月</div>
         <div class="exp-desc">参与校友走访与交流活动，拓展视野，增进校际联络。</div>
+        <div class="exp-lock-msg" style="display:none;padding:8px 0;font-size:13px;color:#999">🔒 已锁定，点击展开输入答案</div>
+        <div class="exp-lock-form" style="display:none;margin-top:8px">
+          <label style="font-size:14px;font-weight:600;color:var(--navy)">城市</label>
+          <div style="display:flex;gap:8px;margin-top:4px">
+            <input type="text" class="exp-lock-answer" style="flex:1;padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px" placeholder="输入答案" />
+            <button onclick="checkExpUnlock('huanan', this)" style="padding:6px 16px;background:#1C3A5E;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">解锁</button>
+          </div>
+          <div class="exp-lock-err" style="color:#e74c3c;font-size:12px;display:none;margin-top:4px">答案错误</div>
+        </div>
         <div class="exp-photos" style="display:none">
           <img src="images/huanan-01.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src);event.stopPropagation()">
           <img src="images/huanan-02.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src);event.stopPropagation()">
@@ -910,10 +919,19 @@
           <img src="images/huanan-08.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src);event.stopPropagation()">
         </div>
       </div>
-      <div class="exp-item" onclick="toggleExpPhotos(this)">
+      <div class="exp-item" onclick="toggleExpPhotos(this)" data-exp="zhijiao">
         <div class="exp-title">赴新疆和田实习支教 <span class="exp-toggle">▶</span></div>
         <div class="exp-period">2023年9月 – 12月</div>
         <div class="exp-desc">赴新疆和田地区参与实习支教，承担教学工作，在民族地区教育一线积累了跨文化沟通与基层实践经验。</div>
+        <div class="exp-lock-msg" style="display:none;padding:8px 0;font-size:13px;color:#999">🔒 已锁定，点击展开输入答案</div>
+        <div class="exp-lock-form" style="display:none;margin-top:8px">
+          <label style="font-size:14px;font-weight:600;color:var(--navy)">地点</label>
+          <div style="display:flex;gap:8px;margin-top:4px">
+            <input type="text" class="exp-lock-answer" style="flex:1;padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px" placeholder="输入答案" />
+            <button onclick="checkExpUnlock('zhijiao', this)" style="padding:6px 16px;background:#1C3A5E;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">解锁</button>
+          </div>
+          <div class="exp-lock-err" style="color:#e74c3c;font-size:12px;display:none;margin-top:4px">答案错误</div>
+        </div>
         <div class="exp-photos" style="display:none">
           <img src="images/zhijiao-01.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src);event.stopPropagation()">
           <img src="images/zhijiao-02.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src);event.stopPropagation()">
@@ -1176,9 +1194,55 @@ function handleTag(key) {
   log("tag clicked: " + key);
 }
 
+var expLocks = {
+  huanan: {q:'城市',a:'sz'},
+  zhijiao: {q:'地点',a:'cl'}
+};
+var expUnlocked = {};
+try { var _exp = localStorage.getItem('huazhiming_exp_unlocked'); if(_exp) expUnlocked = JSON.parse(_exp); } catch(e){}
+
+function checkExpUnlock(id, btn) {
+  var el = btn.closest('.exp-item');
+  var input = el.querySelector('.exp-lock-answer');
+  var answer = input.value.trim().toLowerCase();
+  var lock = expLocks[id];
+  if (answer === lock.a) {
+    expUnlocked[id] = true;
+    localStorage.setItem('huazhiming_exp_unlocked', JSON.stringify(expUnlocked));
+    el.querySelector('.exp-lock-form').style.display = 'none';
+    el.querySelector('.exp-lock-msg').style.display = 'none';
+    var photos = el.querySelector('.exp-photos');
+    photos.style.display = 'flex';
+    var toggle = el.querySelector('.exp-toggle');
+    if(toggle) toggle.textContent = '▼';
+  } else {
+    el.querySelector('.exp-lock-err').style.display = 'block';
+  }
+}
+
 function toggleExpPhotos(el) {
   var photos = el.querySelector('.exp-photos');
+  var lockForm = el.querySelector('.exp-lock-form');
+  var lockMsg = el.querySelector('.exp-lock-msg');
   var toggle = el.querySelector('.exp-toggle');
+  var expId = el.getAttribute('data-exp');
+
+  // 如果这个板块有锁且未解锁
+  if (expId && !expUnlocked[expId]) {
+    if (lockForm.style.display === 'block') {
+      lockForm.style.display = 'none';
+      lockMsg.style.display = 'none';
+      if (toggle) toggle.textContent = '▶';
+    } else {
+      lockMsg.style.display = 'block';
+      lockForm.style.display = 'block';
+      el.querySelector('.exp-lock-err').style.display = 'none';
+      el.querySelector('.exp-lock-answer').value = '';
+      if (toggle) toggle.textContent = '▼';
+    }
+    return;
+  }
+
   if (!photos) return;
   if (photos.style.display === 'none') {
     photos.style.display = 'flex';
