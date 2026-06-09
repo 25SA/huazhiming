@@ -686,8 +686,9 @@
   .memories-grid .mem-item img,
   .memories-grid .mem-item video {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    aspect-ratio: 16 / 9;
+    object-fit: contain;
+    background: #000;
     display: block;
     user-select: none;
     -webkit-user-drag: none;
@@ -1219,10 +1220,13 @@ function galleryShow(idx) {
   var viewer = document.getElementById('galleryViewer');
   var p = window.photoGallery[idx];
   if (galleryImgLoaded[idx]) {
-    viewer.innerHTML = '<img src="' + p.src + '" alt="' + p.name + '" style="max-width:100%;max-height:350px;border-radius:6px;display:block;margin:0 auto">' +
+    viewer.innerHTML = '<img src="' + p.src + '" alt="' + p.name + '" style="max-width:100%;max-height:350px;border-radius:6px;display:block;margin:0 auto;opacity:0;transition:opacity 0.3s ease" onload="this.style.opacity=1">' +
       '<div style="font-size:12px;color:#999;margin-top:4px">' + p.name + '</div>';
+    // Trigger fade
+    var imgs = viewer.querySelectorAll('img');
+    if (imgs.length > 0) setTimeout(function(){imgs[0].style.opacity = '1';}, 10);
   } else {
-    viewer.innerHTML = '<div style="color:#999;font-size:13px">加载中…</div>';
+    viewer.innerHTML = '<div style="color:#999;font-size:13px;opacity:0.5">加载中…</div>';
     var img = new Image();
     img.onload = function() {
       galleryImgLoaded[idx] = true;
@@ -1255,8 +1259,7 @@ function handleTag(key) {
   
   if (item.content === "gallery" && window.photoGallery) {
     html += '<div class="gallery-slideshow">' +
-      '<div id="galleryViewer" style="text-align:center;padding:10px 0;min-height:200px;display:flex;align-items:center;justify-content:center">' +
-        '<span style="color:#999;font-size:14px">点击 ▶ 开始浏览照片</span>' +
+      '<div id="galleryViewer" style="text-align:center;padding:10px 0;min-height:200px;display:flex;align-items:center;justify-content:center;position:relative">' +
       '</div>' +
       '<div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-top:6px">' +
         '<button onclick="galleryPrev()" id="galleryPrevBtn" disabled style="padding:6px 16px;border:1px solid var(--border);border-radius:6px;background:var(--bg);cursor:pointer;font-size:16px;color:var(--text)">‹</button>' +
@@ -1268,6 +1271,8 @@ function handleTag(key) {
       html += '<span id="gDot_' + j + '" onclick="galleryJump(' + j + ')" style="width:7px;height:7px;border-radius:50%;background:#ccc;cursor:pointer;display:inline-block"></span>';
     }
     html += '</div></div>';
+    // Auto-load first photo after gallery HTML is injected
+    setTimeout(function() { galleryShow(0); }, 50);
   }
   
   var arr = null;
