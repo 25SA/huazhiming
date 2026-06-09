@@ -857,7 +857,6 @@
     <h2 class="section-title">留言板</h2>
     <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">欢迎留言交流，你也可以对我的回复给出回应。</p>
     <div class="guestbook-form">
-      <input type="text" id="guestName" class="guest-input" placeholder="你的昵称" maxlength="20">
       <textarea id="guestMsg" class="guest-textarea" placeholder="写下你想说的…" rows="3" maxlength="500"></textarea>
       <button class="guest-submit" onclick="submitGuestbook()">发布留言</button>
     </div>
@@ -1016,28 +1015,36 @@ function openLightbox(index) {
 }
 
 function submitGuestbook() {
-  var name = document.getElementById("guestName");
   var msg = document.getElementById("guestMsg");
-  if (!name || !msg) return;
-  var n = name.value.trim() || "匿名";
+  if (!msg) return;
   var m = msg.value.trim();
   if (!m) { alert("请输入留言内容"); return; }
+  
+  var name = getGuestAlias();
   
   var entries = JSON.parse(localStorage.getItem("huazhiming_guestbook") || "[]");
   entries.unshift({
     id: Date.now(),
-    name: n,
+    name: name,
     msg: m,
     time: new Date().toLocaleString("zh-CN"),
     replies: []
   });
   localStorage.setItem("huazhiming_guestbook", JSON.stringify(entries));
-  name.value = "";
   msg.value = "";
   renderGuestbook();
 }
 
-function replyGuest(id) {
+function getGuestAlias() {
+  var alias = localStorage.getItem("huazhiming_alias");
+  if (alias) return alias;
+  var prefixes = ["访客·"];
+  var names = ["青松","明月","清风","远山","星河","飞鸟","流云","晨露","晚霞","春草","落叶","归雁","白鹭","孤舟","渔火","寒江","暮雪","朝雾","幽兰","翠竹","寒梅","静水","浮萍","新雨","残荷"];
+  var n = names[Math.floor(Math.random() * names.length)];
+  alias = "访客·" + n;
+  localStorage.setItem("huazhiming_alias", alias);
+  return alias;
+}function replyGuest(id) {
   var replyBox = document.getElementById("replyBox_" + id);
   if (!replyBox) return;
   if (replyBox.style.display === "block") {
