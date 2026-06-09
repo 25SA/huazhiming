@@ -474,263 +474,7 @@
     opacity: 0.7;
   }
 
-  .notes-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 12px;
-  }
-
-  .notes-item {
-    padding: 14px 16px;
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-
-  .notes-item:hover {
-    border-color: var(--navy-light);
-    box-shadow: 0 2px 12px var(--shadow);
-  }
-
-  .notes-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 4px;
-  }
-
-  .notes-tag {
-    font-size: 11px;
-    padding: 2px 8px;
-    border-radius: 10px;
-    background: rgba(28, 58, 94, 0.08);
-    color: var(--navy);
-  }
-
-  .notes-date {
-    font-size: 11px;
-    color: var(--text-muted);
-  }
-
-  .notes-title {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--navy-dark);
-    margin-bottom: 4px;
-  }
-
-  .notes-desc {
-    font-size: 12px;
-    color: var(--text-muted);
-    line-height: 1.6;
-  }
-  .notes-desc-short {
-    font-size: 12px;
-    color: var(--text-muted);
-    line-height: 1.6;
-  }
-
-  /* Footer */
-  footer {
-    text-align: center;
-    padding: 36px 0;
-    font-size: 12px;
-    color: var(--text-muted);
-    background: var(--navy-dark);
-    color: rgba(255,255,255,0.5);
-  }
-
-  footer .container {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-    footer a {
-    color: var(--gold-light);
-    text-decoration: none;
-  }
-
-  
-
-  /* Guestbook */
-  .guestbook-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 24px;
-  }
-  .guest-input, .guest-textarea {
-    padding: 10px 14px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    font-size: 14px;
-    font-family: inherit;
-    outline: none;
-    transition: border 0.2s;
-    width: 100%;
-  }
-  .guest-input:focus, .guest-textarea:focus {
-    border-color: var(--navy);
-  }
-  .guest-textarea {
-    resize: vertical;
-    min-height: 60px;
-  }
-  .guest-submit {
-    align-self: flex-end;
-    padding: 8px 24px;
-    background: var(--navy);
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  .guest-submit:hover {
-    background: var(--navy-light);
-  }
-  .guest-entry {
-    padding: 14px 16px;
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    margin-bottom: 10px;
-  }
-  .guest-entry-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 6px;
-  }
-  .guest-entry-name {
-    font-weight: 600;
-    font-size: 14px;
-    color: var(--navy-dark);
-  }
-  .guest-entry-time {
-    font-size: 11px;
-    color: var(--text-muted);
-  }
-  .guest-entry-msg {
-    font-size: 14px;
-    color: var(--text);
-    line-height: 1.6;
-    margin-bottom: 8px;
-  }
-  .guest-entry-actions {
-    display: flex;
-    gap: 12px;
-  }
-  .guest-reply-btn {
-    font-size: 13px;
-    color: var(--navy-light);
-    cursor: pointer;
-    opacity: 0.7;
-    transition: opacity 0.2s;
-  }
-  .guest-reply-btn:hover {
-    opacity: 1;
-  }
-  .guest-reply {
-    margin: 6px 0 6px 16px;
-    padding: 8px 12px;
-    background: rgba(28,58,94,0.04);
-    border-left: 3px solid var(--gold);
-    border-radius: 0 8px 8px 0;
-    font-size: 13px;
-    line-height: 1.5;
-  }
-  .guest-reply-author {
-    font-weight: 600;
-    color: var(--navy);
-    margin-right: 6px;
-  }
-  .guest-reply-text {
-    color: var(--text);
-  }
-  .guest-reply-time {
-    display: block;
-    font-size: 11px;
-    color: var(--text-muted);
-    margin-top: 4px;
-  }
-  .guest-reply-box {
-    display: flex;
-    gap: 8px;
-    align-items: flex-start;
-    margin: 8px 0 8px 16px;
-  }
-  .reply-input {
-    flex: 1;
-    padding: 8px 12px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    font-size: 13px;
-    font-family: inherit;
-    resize: vertical;
-    outline: none;
-    min-height: 36px;
-  }
-  .reply-input:focus {
-    border-color: var(--navy);
-  }
-  .reply-submit {
-    padding: 8px 16px;
-    background: var(--gold);
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    font-size: 13px;
-    cursor: pointer;
-    white-space: nowrap;
-  }
-  .reply-submit:hover {
-    background: #b8963a;
-  }
-
-  .social-lock-error {
-    margin-top: 10px;
-    font-size: 13px;
-    color: #e74c3c;
-    min-height: 20px;
-  }
-
-
-  /* Notes expand/collapse */
-  .notes-desc { cursor: pointer; transition: max-height 0.3s ease; }
-  .notes-desc.collapsed {
-    max-height: 4.5em;
-    overflow: hidden;
-    position: relative;
-  }
-  .notes-desc.expanded { max-height: none; }
-  .notes-epigraph {
-    font-style: italic;
-    color: var(--navy-light);
-    padding: 8px 16px;
-    margin: 8px 0;
-    border-left: 3px solid var(--gold);
-    background: rgba(201, 168, 76, 0.06);
-    border-radius: 0 8px 8px 0;
-    font-size: 14px;
-    line-height: 1.6;
-  }
-  .notes-expand-hint {
-    text-align: center;
-    font-size: 13px;
-    color: var(--navy-light);
-    opacity: 0.7;
-    padding: 4px 0;
-    cursor: pointer;
-  }
-  .notes-expand-hint:hover { opacity: 1; }
-
-  .politics-img {
+.politics-img {
     margin-top: 10px;
     border-radius: 10px;
     overflow: hidden;
@@ -757,7 +501,122 @@
     .hero .subtitle { font-size: 16px; }
     .section-title { font-size: 24px; }
     .exp-item .exp-period { white-space: normal; }
-  }</style>
+  }
+  /* Notes card style */
+  .notes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .notes-item {
+    padding: 20px 24px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .notes-item:hover {
+    border-color: var(--navy-light);
+    box-shadow: 0 4px 20px var(--shadow);
+    transform: translateY(-2px);
+  }
+  .notes-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .notes-tag {
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    background: rgba(28, 58, 94, 0.08);
+    color: var(--navy);
+  }
+  .notes-date {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .notes-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy-dark);
+    margin-bottom: 4px;
+    letter-spacing: 0.01em;
+  }
+  .notes-epigraph {
+    font-size: 15px;
+    color: var(--navy-light);
+    padding: 14px 20px;
+    margin: 14px 0 12px 0;
+    border-left: 4px solid var(--gold);
+    background: rgba(201, 168, 76, 0.06);
+    border-radius: 0 10px 10px 0;
+    line-height: 1.7;
+    font-style: italic;
+  }
+  .notes-body {
+    position: relative;
+    margin: 6px 0 2px 0;
+  }
+  .notes-body-inner {
+    font-size: 16px;
+    color: #2c3e50;
+    line-height: 1.9;
+    white-space: pre-line;
+    transition: max-height 0.45s ease;
+  }
+  .notes-body-inner.collapsed {
+    max-height: 7em;
+    overflow: hidden;
+  }
+  .notes-body-inner p {
+    margin-bottom: 14px;
+    text-indent: 2em;
+  }
+  .notes-body-inner p:last-child {
+    margin-bottom: 0;
+  }
+  .notes-fade {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background: linear-gradient(to bottom, transparent, #ffffff);
+    pointer-events: none;
+  }
+  .notes-card-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    padding: 10px 24px;
+    background: rgba(28, 58, 94, 0.06);
+    color: var(--navy-light);
+    border: 1px solid rgba(28, 58, 94, 0.12);
+    border-radius: 24px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    user-select: none;
+    letter-spacing: 0.02em;
+  }
+  .notes-card-btn:hover {
+    background: var(--navy);
+    color: #fff;
+    border-color: var(--navy);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(28,58,94,0.15);
+  }
+  .notes-desc-short {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+</style>
 </head>
 <body>
 
@@ -956,6 +815,23 @@ window.tagData = {
 let cl = 0;
 function log(m) { cl++; if (typeof console !== 'undefined') console.log("HZM["+cl+"]: "+m); }
 
+
+function toggleNote(i) {
+  var b = document.getElementById("nbi_" + i);
+  var f = document.getElementById("nf_" + i);
+  var t = document.getElementById("nb_btn_" + i);
+  if (!b || !t) return;
+  if (b.classList.contains("collapsed")) {
+    b.classList.remove("collapsed");
+    if (f) f.style.display = "none";
+    t.innerHTML = "收起 ▲";
+  } else {
+    b.classList.add("collapsed");
+    if (f) f.style.display = "block";
+    t.innerHTML = "📖 展开全文";
+  }
+}
+
 function handleTag(key) {
   var desc = document.getElementById("tagDesc");
   if (!desc) { log("tagDesc not found!"); return; }
@@ -985,7 +861,7 @@ function handleTag(key) {
   
   if (arr) {
     if (key === "notes") {
-      // 札记：题记 + 折叠全文
+      // 札记：卡片式阅读体验
       html += '<div class="notes-list">';
       for (var i = 0; i < arr.length; i++) {
         var n = arr[i];
@@ -993,8 +869,11 @@ function handleTag(key) {
           '<div class="notes-header"><span class="notes-tag">' + n.tag + '</span><span class="notes-date">' + n.date + '</span></div>' +
           '<div class="notes-title">' + n.title + '</div>' +
           (n.epigraph ? '<div class="notes-epigraph">' + n.epigraph + '</div>' : '') +
-          '<div class="notes-desc collapsed" id="nd_' + i + '">' + n.desc + '</div>' +
-          '<div class="notes-expand-hint" id="nh_' + i + '" onclick="var d=document.getElementById(\'nd_' + i + '\');var h=this;if(d.classList.contains(\'collapsed\')){d.classList.remove(\'collapsed\');d.classList.add(\'expanded\');h.textContent=\'收起▲\';}else{d.classList.add(\'collapsed\');d.classList.remove(\'expanded\');h.textContent=\'点击展开全文\';}">点击展开全文</div>' +
+          '<div class="notes-body">' +
+            '<div class="notes-body-inner collapsed" id="nbi_' + i + '">' + n.desc + '</div>' +
+            '<div class="notes-fade" id="nf_' + i + '"></div>' +
+          '</div>' +
+          '<div class="notes-card-btn" id="nb_btn_' + i + '" onclick="toggleNote(' + i + ')">&#x1F4D6; 展开全文</div>' +
           '</div>';
       }
       html += '</div>';
