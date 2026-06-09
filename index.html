@@ -284,9 +284,10 @@
     white-space: nowrap;
   }
 
-  .exp-photos{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .exp-photos{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
 .exp-photo{width:100px;height:75px;object-fit:cover;border-radius:6px;cursor:pointer;transition:transform .2s}
 .exp-photo:hover{transform:scale(1.05)}
+.exp-toggle{font-size:12px;margin-left:6px;transition:transform .2s}
   .exp-item .exp-desc {
     font-size: 13px;
     color: var(--text-muted);
@@ -796,6 +797,9 @@
   :root[data-theme="dark"] .tag-desc p {
     color: #bbb;
   }
+  :root[data-theme="dark"] .tag-desc .tag-hint {
+    color: #e6c87a;
+  }
   :root[data-theme="dark"] .contact-card {
     background: #1e1e1e;
     color: #e0e0e0;
@@ -891,24 +895,35 @@
     <div class="section-label">Experience</div>
     <h2 class="section-title">实践经历</h2>
     <div class="exp-list">
-      <div class="exp-item">
-        <div class="exp-title">华南校友行活动</div>
+      <div class="exp-item" onclick="toggleExpPhotos(this)">
+        <div class="exp-title">华南校友行活动 <span class="exp-toggle">▶</span></div>
         <div class="exp-period">2024年7月</div>
         <div class="exp-desc">参与校友走访与交流活动，拓展视野，增进校际联络。</div>
-        <div class="exp-photos">
-          <img src="images/huanan-01.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src)">
-          <img src="images/huanan-02.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src)">
-          <img src="images/huanan-03.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src)">
-          <img src="images/huanan-04.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src)">
-          <img src="images/huanan-05.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src)">
-          <img src="images/huanan-06.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src)">
-          <img src="images/huanan-07.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src)">
-          <img src="images/huanan-08.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src)">
+        <div class="exp-photos" style="display:none">
+          <img src="images/huanan-01.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src);event.stopPropagation()">
+          <img src="images/huanan-02.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src);event.stopPropagation()">
+          <img src="images/huanan-03.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src);event.stopPropagation()">
+          <img src="images/huanan-04.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src);event.stopPropagation()">
+          <img src="images/huanan-05.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src);event.stopPropagation()">
+          <img src="images/huanan-06.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src);event.stopPropagation()">
+          <img src="images/huanan-07.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src);event.stopPropagation()">
+          <img src="images/huanan-08.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src);event.stopPropagation()">
         </div>
-      <div class="exp-item">
-        <div class="exp-title">赴新疆和田实习支教</div>
+      </div>
+      <div class="exp-item" onclick="toggleExpPhotos(this)">
+        <div class="exp-title">赴新疆和田实习支教 <span class="exp-toggle">▶</span></div>
         <div class="exp-period">2023年9月 – 12月</div>
         <div class="exp-desc">赴新疆和田地区参与实习支教，承担教学工作，在民族地区教育一线积累了跨文化沟通与基层实践经验。</div>
+        <div class="exp-photos" style="display:none">
+          <img src="images/zhijiao-01.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src);event.stopPropagation()">
+          <img src="images/zhijiao-02.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src);event.stopPropagation()">
+          <img src="images/zhijiao-03.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src);event.stopPropagation()">
+          <img src="images/zhijiao-04.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src);event.stopPropagation()">
+          <img src="images/zhijiao-05.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src);event.stopPropagation()">
+          <img src="images/zhijiao-06.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src);event.stopPropagation()">
+          <img src="images/zhijiao-07.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src);event.stopPropagation()">
+          <img src="images/zhijiao-08.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src);event.stopPropagation()">
+        </div>
       </div>
       <div class="exp-item">
         <div class="exp-title">疫情防控志愿者</div>
@@ -1159,6 +1174,19 @@ function handleTag(key) {
   
   desc.innerHTML = html;
   log("tag clicked: " + key);
+}
+
+function toggleExpPhotos(el) {
+  var photos = el.querySelector('.exp-photos');
+  var toggle = el.querySelector('.exp-toggle');
+  if (!photos) return;
+  if (photos.style.display === 'none') {
+    photos.style.display = 'flex';
+    if (toggle) toggle.textContent = '▼';
+  } else {
+    photos.style.display = 'none';
+    if (toggle) toggle.textContent = '▶';
+  }
 }
 
 function viewImage(src) {
