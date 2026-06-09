@@ -986,7 +986,7 @@ window.schoolMemories = {
   "天津财经大学": [],
   "西乡第一中学": [
     {type:"video", src:"images/gaosan-biyel.mp4"},
-    {type:"video", src:"images/gaosan-jinian.mp4"}
+    {type:"video", src:"images/gaosan-jinian.mp4", credit:"来源：陈靖剪辑"}
   ],
   "西乡第五中学": [
     {type:"image", src:"images/zhongxue-biyezheng.jpg"},
@@ -1270,7 +1270,8 @@ function showMemories(school) {
       if (item.type === 'image') {
         el.innerHTML = '<img src="' + item.src + '" alt="" loading="lazy" onclick="openLightboxMem(' + i + ',\'' + school + '\')">';
       } else if (item.type === 'video') {
-        el.innerHTML = '<video src="' + item.src + '" controls></video>';
+        var creditHtml = item.credit ? '<div style="font-size:12px;color:#999;margin-top:4px">' + item.credit + '</div>' : '';
+        el.innerHTML = '<video src="' + item.src + '" controls></video>' + creditHtml;
       }
       grid.appendChild(el);
     }
