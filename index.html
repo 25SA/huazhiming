@@ -284,6 +284,9 @@
     white-space: nowrap;
   }
 
+  .exp-photos{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.exp-photo{width:100px;height:75px;object-fit:cover;border-radius:6px;cursor:pointer;transition:transform .2s}
+.exp-photo:hover{transform:scale(1.05)}
   .exp-item .exp-desc {
     font-size: 13px;
     color: var(--text-muted);
@@ -877,7 +880,16 @@
         <div class="exp-title">华南校友行活动</div>
         <div class="exp-period">2024年7月</div>
         <div class="exp-desc">参与校友走访与交流活动，拓展视野，增进校际联络。</div>
-      </div>
+        <div class="exp-photos">
+          <img src="images/huanan-01.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src)">
+          <img src="images/huanan-02.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src)">
+          <img src="images/huanan-03.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src)">
+          <img src="images/huanan-04.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src)">
+          <img src="images/huanan-05.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src)">
+          <img src="images/huanan-06.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src)">
+          <img src="images/huanan-07.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src)">
+          <img src="images/huanan-08.jpg" alt="" loading="lazy" class="exp-photo" onclick="viewImage(this.src)">
+        </div>
       <div class="exp-item">
         <div class="exp-title">赴新疆和田实习支教</div>
         <div class="exp-period">2023年9月 – 12月</div>
@@ -1144,6 +1156,17 @@ function handleTag(key) {
   
   desc.innerHTML = html;
   log("tag clicked: " + key);
+}
+
+function viewImage(src) {
+  var overlay = document.createElement("div");
+  overlay.className = "lightbox-overlay";
+  overlay.onclick = function() { document.body.removeChild(overlay); };
+  overlay.innerHTML = '<div class="lightbox-content" onclick="event.stopPropagation()">' +
+    '<span class="lightbox-close" onclick="document.body.removeChild(this.parentElement.parentElement)">&times;</span>' +
+    '<img src="' + src + '">' +
+    '</div>';
+  document.body.appendChild(overlay);
 }
 
 function openLightbox(index) {
