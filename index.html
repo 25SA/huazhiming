@@ -930,8 +930,8 @@
         <div class="exp-lock-form" style="display:none;margin-top:8px">
           <label style="font-size:14px;font-weight:600;color:var(--navy)">城市</label>
           <div style="display:flex;gap:8px;margin-top:4px">
-            <input type="text" class="exp-lock-answer" style="flex:1;padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px" placeholder="输入答案" />
-            <button onclick="checkExpUnlock('huanan', this)" style="padding:6px 16px;background:#1C3A5E;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">解锁</button>
+            <input type="text" class="exp-lock-answer" style="flex:1;padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px" placeholder="输入答案" onclick="event.stopPropagation()" />
+            <button onclick="event.stopPropagation();checkExpUnlock('huanan', this)" style="padding:6px 16px;background:#1C3A5E;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">解锁</button>
           </div>
           <div class="exp-lock-err" style="color:#e74c3c;font-size:12px;display:none;margin-top:4px">答案错误</div>
         </div>
@@ -956,8 +956,8 @@
         <div class="exp-lock-form" style="display:none;margin-top:8px">
           <label style="font-size:14px;font-weight:600;color:var(--navy)">地点</label>
           <div style="display:flex;gap:8px;margin-top:4px">
-            <input type="text" class="exp-lock-answer" style="flex:1;padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px" placeholder="输入答案" />
-            <button onclick="checkExpUnlock('zhijiao', this)" style="padding:6px 16px;background:#1C3A5E;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">解锁</button>
+            <input type="text" class="exp-lock-answer" style="flex:1;padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px" placeholder="输入答案" onclick="event.stopPropagation()" />
+            <button onclick="event.stopPropagation();checkExpUnlock('zhijiao', this)" style="padding:6px 16px;background:#1C3A5E;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px">解锁</button>
           </div>
           <div class="exp-lock-err" style="color:#e74c3c;font-size:12px;display:none;margin-top:4px">答案错误</div>
         </div>
