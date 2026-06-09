@@ -761,9 +761,6 @@
   }
   :root[data-theme="dark"] .notes-item,
   :root[data-theme="dark"] .exp-item,
-  :root[data-theme="dark"] .guestbook-item {
-    background: var(--section-alt);
-  }
   :root[data-theme="dark"] .hero {
     background: linear-gradient(160deg, #121820 0%, #18202A 50%, #1E2835 100%);
   }
@@ -783,10 +780,28 @@
   :root[data-theme="dark"] .tl-school {
     color: var(--navy);
   }
-  :root[data-theme="dark"] .guestbook-form textarea {
-    background: var(--section-alt);
-    color: var(--text);
-    border-color: var(--border);
+  :root[data-theme="dark"] .skill-tags .skill-tag {
+    background: #2a2a2a;
+    color: #e0e0e0;
+    border-color: #444;
+  }
+  :root[data-theme="dark"] .skill-tags .skill-tag:hover {
+    background: #3a3a3a;
+  }
+  :root[data-theme="dark"] .skill-tags .skill-tag.active {
+    background: #1C3A5E;
+    color: #fff;
+    border-color: #1C3A5E;
+  }
+  :root[data-theme="dark"] .tag-desc p {
+    color: #bbb;
+  }
+  :root[data-theme="dark"] .contact-card {
+    background: #1e1e1e;
+    color: #e0e0e0;
+  }
+  :root[data-theme="dark"] .contact-card .contact-email-text {
+    color: #ccc;
   }</style>
 </head>
 <body>
@@ -940,19 +955,7 @@
   </div>
 </section>
 
-<!-- Guestbook -->
-<section>
-  <div class="container">
-    <div class="section-label">互动</div>
-    <h2 class="section-title">留言板</h2>
-    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">欢迎留言交流，你也可以对我的回复给出回应。</p>
-    <div class="guestbook-form">
-      <textarea id="guestMsg" class="guest-textarea" placeholder="写下你想说的…" rows="3" maxlength="500"></textarea>
-      <button class="guest-submit" onclick="submitGuestbook()">发布留言</button>
-    </div>
-    <div class="guestbook-list" id="guestbookList"></div>
-  </div>
-</section><footer>
+<footer>
   <div class="container">
     <span>© 2026 华志明</span>
     <span style="font-size:11px; opacity:0.6;">Built with care</span>
@@ -1183,116 +1186,10 @@ function openLightbox(index) {
   document.body.appendChild(overlay);
 }
 
-function submitGuestbook() {
-  var msg = document.getElementById("guestMsg");
-  if (!msg) return;
-  var m = msg.value.trim();
-  if (!m) { alert("请输入留言内容"); return; }
-  
-  var name = getGuestAlias();
-  
-  var entries = JSON.parse(localStorage.getItem("huazhiming_guestbook") || "[]");
-  entries.unshift({
-    id: Date.now(),
-    name: name,
-    msg: m,
-    time: new Date().toLocaleString("zh-CN"),
-    replies: []
-  });
-  localStorage.setItem("huazhiming_guestbook", JSON.stringify(entries));
-  msg.value = "";
-  renderGuestbook();
-}
-
-function getGuestAlias() {
-  var alias = localStorage.getItem("huazhiming_alias");
-  if (alias) return alias;
-  var prefixes = ["访客·"];
-  var names = ["青松","明月","清风","远山","星河","飞鸟","流云","晨露","晚霞","春草","落叶","归雁","白鹭","孤舟","渔火","寒江","暮雪","朝雾","幽兰","翠竹","寒梅","静水","浮萍","新雨","残荷"];
-  var n = names[Math.floor(Math.random() * names.length)];
-  alias = "访客·" + n;
-  localStorage.setItem("huazhiming_alias", alias);
-  return alias;
-}function replyGuest(id) {
-  var replyBox = document.getElementById("replyBox_" + id);
-  if (!replyBox) return;
-  if (replyBox.style.display === "block") {
-    replyBox.style.display = "none";
-    return;
-  }
-  replyBox.style.display = "block";
-  replyBox.querySelector(".reply-input").focus();
-}
-
-function submitReply(id) {
-  var replyBox = document.getElementById("replyBox_" + id);
-  if (!replyBox) return;
-  var input = replyBox.querySelector(".reply-input");
-  var text = input.value.trim();
-  if (!text) { alert("请输入回复内容"); return; }
-  
-  var entries = JSON.parse(localStorage.getItem("huazhiming_guestbook") || "[]");
-  for (var i = 0; i < entries.length; i++) {
-    if (entries[i].id === id) {
-      entries[i].replies.push({
-        text: text,
-        time: new Date().toLocaleString("zh-CN")
-      });
-      break;
-    }
-  }
-  localStorage.setItem("huazhiming_guestbook", JSON.stringify(entries));
-  renderGuestbook();
-}
-
-function renderGuestbook() {
-  var list = document.getElementById("guestbookList");
-  if (!list) return;
-  var entries = JSON.parse(localStorage.getItem("huazhiming_guestbook") || "[]");
-  if (entries.length === 0) {
-    list.innerHTML = '<div style="text-align:center;padding:30px 0;color:var(--text-muted);font-size:14px;">还没有留言，来写下第一条吧 ✍️</div>';
-    return;
-  }
-  var html = "";
-  for (var i = 0; i < entries.length; i++) {
-    var e = entries[i];
-    html += '<div class="guest-entry">' +
-      '<div class="guest-entry-header">' +
-        '<span class="guest-entry-name">' + escapeHtml(e.name) + '</span>' +
-        '<span class="guest-entry-time">' + e.time + '</span>' +
-      '</div>' +
-      '<div class="guest-entry-msg">' + escapeHtml(e.msg) + '</div>';
-    
-    if (e.replies && e.replies.length > 0) {
-      for (var j = 0; j < e.replies.length; j++) {
-        var r = e.replies[j];
-        html += '<div class="guest-reply">' +
-          '<span class="guest-reply-author">华志明</span>' +
-          '<span class="guest-reply-text">' + escapeHtml(r.text) + '</span>' +
-          '<span class="guest-reply-time">' + r.time + '</span>' +
-        '</div>';
-      }
-    }
-    
-    html += '<div class="guest-reply-box" id="replyBox_' + e.id + '" style="display:none;">' +
-      '<textarea class="reply-input" placeholder="写下回复…" rows="2"></textarea>' +
-      '<button class="reply-submit" onclick="submitReply(' + e.id + ')">回复</button>' +
-    '</div>';
-    
-    html += '<div class="guest-entry-actions">' +
-      '<span class="guest-reply-btn" onclick="replyGuest(' + e.id + ')">💬 回复</span>' +
-    '</div></div>';
-  }
-  list.innerHTML = html;
-}
 
 function escapeHtml(s) {
   return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 }
-
-document.addEventListener("DOMContentLoaded", function() {
-  renderGuestbook();
-});
 
 log("script loaded");
 
