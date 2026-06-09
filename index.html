@@ -928,11 +928,11 @@
     <div class="timeline">
       <div class="tl-track"></div>
       <div class="tl-dot tl-dot-top"></div>
-      <div class="tl-item" onclick="showMemories('兰州大学')">
+      <div class="tl-item" id="tl-lanzhou" onclick="unlockLanzhou()">
         <div class="tl-left"></div>
         <div class="tl-right">
-          <div class="tl-school">兰州大学 <span class="exp-toggle">▶</span></div>
-          <div class="tl-detail">法律硕士 · 在读</div>
+          <div class="tl-school" id="lanzhou-name" style="cursor:pointer;color:var(--text-muted)">🔒 点击解锁学校</div>
+          <div class="tl-detail" id="lanzhou-detail" style="display:none">法律硕士 · 在读</div>
         </div>
       </div>
       <div class="tl-item" onclick="showMemories('天津财经大学')">
@@ -1321,6 +1321,40 @@ function checkExpUnlock(id, btn) {
   }
 }
 
+function unlockLanzhou() {
+  var nameEl = document.getElementById('lanzhou-name');
+  var detailEl = document.getElementById('lanzhou-detail');
+  if (nameEl.textContent !== '🔒 点击解锁学校') return;
+
+  var overlay = document.createElement('div');
+  overlay.className = 'lightbox-overlay';
+  overlay.onclick = function() { if (overlay.parentNode) overlay.parentNode.removeChild(overlay); };
+  overlay.innerHTML = '<div class="lightbox-content" onclick="event.stopPropagation()" style="padding:30px;text-align:center;max-width:320px">' +
+    '<div style="font-size:15px;font-weight:600;color:var(--navy);margin-bottom:16px">🔒 兰州大学</div>' +
+    '<div style="font-size:13px;color:var(--text-muted);margin-bottom:12px">分数</div>' +
+    '<input type="text" id="lanUnlockAnswer" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;font-size:16px;text-align:center;outline:none;box-sizing:border-box" placeholder="输入答案" />' +
+    '<div id="lanUnlockErr" style="color:#e74c3c;font-size:12px;display:none;margin-top:8px">答案错误</div>' +
+    '<button onclick="checkLanUnlock()" style="margin-top:14px;padding:10px 28px;background:#1C3A5E;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px">确认</button>' +
+    '</div>';
+  document.body.appendChild(overlay);
+  setTimeout(function(){ document.getElementById('lanUnlockAnswer').focus(); }, 100);
+}
+
+function checkLanUnlock() {
+  var answer = document.getElementById('lanUnlockAnswer').value.trim().toLowerCase();
+  if (answer === '331') {
+    document.getElementById('lanzhou-name').textContent = '兰州大学';
+    document.getElementById('lanzhou-name').style.color = '';
+    document.getElementById('lanzhou-name').style.cursor = 'default';
+    document.getElementById('lanzhou-detail').style.display = 'block';
+    document.getElementById('lanzhou-detail').style.color = '';
+    var overlays = document.querySelectorAll('.lightbox-overlay');
+    for (var i = 0; i < overlays.length; i++) overlays[i].parentNode.removeChild(overlays[i]);
+  } else {
+    document.getElementById('lanUnlockErr').style.display = 'block';
+  }
+}
+
 function toggleExpPhotos(el) {
   var photos = el.querySelector('.exp-photos');
   var lockForm = el.querySelector('.exp-lock-form');
@@ -1405,7 +1439,8 @@ var schoolLocks = {
   "西乡第五中学": {question:"我的班级", answer:"16"},
   "西乡第一中学": {question:"我的班主任", answer:"hr"},
   "天津财经大学": {question:"我的床铺号", answer:"1"},
-  "兰州大学": null
+  "兰州大学": null,
+  "_lanzhouName": {question:"分数", answer:"331"}
 };
 
 var unlockedSchools = {};
