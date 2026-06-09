@@ -89,24 +89,58 @@
   }
 
   .hero h1 {
-    font-size: 48px;
+    font-size: 56px;
     font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-    margin-bottom: 8px;
+    letter-spacing: 0.06em;
+    line-height: 1.15;
+    margin-bottom: 12px;
     color: var(--navy-dark);
+    background: linear-gradient(135deg, var(--navy-dark), var(--navy));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .hero .subtitle {
-    font-size: 18px;
+    font-size: 19px;
     color: var(--text-muted);
-    margin-bottom: 4px;
+    margin-bottom: 6px;
+    letter-spacing: 0.3em;
+    font-weight: 300;
   }
 
-  .hero .subtitle-secondary {
-    font-size: 15px;
-    color: var(--text-muted);
-    margin-bottom: 24px;
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(20px); }
+    to { opacity:1; transform: translateY(0); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  @keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 4px 20px var(--shadow-hover); }
+    50% { box-shadow: 0 4px 30px rgba(28,58,94,0.15); }
+  }
+  @keyframes typeDot {
+    0%, 100% { opacity:1; }
+    50% { opacity:0; }
+  }
+  @keyframes scrollHint {
+    0%, 100% { transform: translateY(0); opacity:0.4; }
+    50% { transform: translateY(6px); opacity:0.8; }
+  }
+
+  .hero-avatar {
+    animation: float 4s ease-in-out infinite, pulseGlow 3s ease-in-out infinite;
+  }
+  .hero h1 {
+    animation: fadeUp 0.8s ease-out both;
+  }
+  .hero .subtitle {
+    animation: fadeUp 0.8s ease-out 0.2s both;
+  }
+  .hero .tagline {
+    animation: fadeUp 0.8s ease-out 0.4s both;
   }
 
   .hero .divider {
@@ -117,17 +151,44 @@
     margin: 16px 0 20px 0;
   }
 
+  .scroll-hint {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    opacity: 0.6;
+  }
+  .scroll-hint span {
+    display: block;
+    font-size: 18px;
+    animation: scrollHint 2s ease-in-out infinite;
+  }
+
   .hero .tagline {
-    font-size: 15px;
+    font-style: italic;
+    letter-spacing: 0.04em;
+    position: relative;
+    display: inline-block;
+    font-size: 16px;
     color: var(--text-muted);
     max-width: 500px;
     line-height: 1.9;
+    margin-top: 4px;
+    padding: 8px 20px;
+    border-left: 2px solid var(--gold);
+    opacity: 0.85;
   }
 
-  .hero .tagline em {
-    font-style: normal;
-    color: var(--navy);
-    font-weight: 500;
+  :root[data-theme="dark"] .hero .tagline {
+    border-left-color: var(--gold);
+    opacity: 0.75;
   }
 
   /* Sections */
@@ -772,6 +833,9 @@
     background: radial-gradient(ellipse at 20% 50%, rgba(139, 170, 212, 0.05) 0%, transparent 50%),
                 radial-gradient(ellipse at 80% 20%, rgba(212, 185, 106, 0.06) 0%, transparent 50%);
   }
+  :root[data-theme="dark"] .hero {
+    background: linear-gradient(160deg, #0e141c 0%, #141c28 50%, #1a2432 100%);
+  }
   :root[data-theme="dark"] section:nth-child(even) {
     background: var(--section-bg);
   }
@@ -849,6 +913,10 @@
     <h1>华志明</h1>
     <p class="subtitle">记录者 · 思考者 · 在路上</p>
     <p class="tagline">我与我，周旋久，宁作我。</p>
+  </div>
+  <div class="scroll-hint">
+    <span>↓</span>
+    往下看
   </div>
 </div>
 
