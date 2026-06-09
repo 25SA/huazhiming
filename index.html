@@ -502,31 +502,7 @@
     color: var(--navy);
   }
 
-  .photo-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 10px;
-    margin-top: 12px;
-  }
-
-  .photo-item {
-    border-radius: 10px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-    aspect-ratio: 1;
-  }
-
-  .photo-item:hover {
-    transform: scale(1.03);
-  }
-
-  .photo-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
+  
   .lightbox-overlay {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -1233,6 +1209,40 @@ function toggleNote(i) {
     t.innerHTML = "📖 展开全文";
   }
 }
+
+var galleryIndex = -1;
+var galleryImgLoaded = {};
+
+function galleryShow(idx) {
+  if (idx < 0 || idx >= window.photoGallery.length) return;
+  galleryIndex = idx;
+  var viewer = document.getElementById('galleryViewer');
+  var p = window.photoGallery[idx];
+  if (galleryImgLoaded[idx]) {
+    viewer.innerHTML = '<img src="' + p.src + '" alt="' + p.name + '" style="max-width:100%;max-height:350px;border-radius:6px;display:block;margin:0 auto">' +
+      '<div style="font-size:12px;color:#999;margin-top:4px">' + p.name + '</div>';
+  } else {
+    viewer.innerHTML = '<div style="color:#999;font-size:13px">加载中…</div>';
+    var img = new Image();
+    img.onload = function() {
+      galleryImgLoaded[idx] = true;
+      galleryShow(idx);
+    };
+    img.src = p.src;
+  }
+  document.getElementById('galleryCounter').textContent = (idx + 1) + '/' + window.photoGallery.length;
+  document.getElementById('galleryPrevBtn').disabled = (idx === 0);
+  document.getElementById('galleryNextBtn').disabled = (idx === window.photoGallery.length - 1);
+  for (var i = 0; i < window.photoGallery.length; i++) {
+    var dot = document.getElementById('gDot_' + i);
+    if (dot) dot.style.background = (i === idx) ? 'var(--navy)' : '#ccc';
+  }
+}
+
+function galleryNext() { if (galleryIndex < window.photoGallery.length - 1) galleryShow(galleryIndex + 1); }
+function galleryPrev() { if (galleryIndex > 0) galleryShow(galleryIndex - 1); }
+function galleryJump(idx) { galleryShow(idx); }
+
 function handleTag(key) {
   var desc = document.getElementById("tagDesc");
   if (!desc) { log("tagDesc not found!"); return; }
@@ -1244,14 +1254,20 @@ function handleTag(key) {
   var html = '<p><strong>' + item.title + '</strong> — ' + item.desc + '</p>';
   
   if (item.content === "gallery" && window.photoGallery) {
-    html += '<div class="photo-grid">';
-    for (var i = 0; i < window.photoGallery.length; i++) {
-      var p = window.photoGallery[i];
-      html += '<div class="photo-item" onclick="openLightbox(' + i + ')">' +
-        '<img src="' + p.src + '" alt="' + p.name + '" style="width:100%;height:180px;object-fit:cover;border-radius:8px;display:block">' +
-        '</div>';
+    html += '<div class="gallery-slideshow">' +
+      '<div id="galleryViewer" style="text-align:center;padding:10px 0;min-height:200px;display:flex;align-items:center;justify-content:center">' +
+        '<span style="color:#999;font-size:14px">点击 ▶ 开始浏览照片</span>' +
+      '</div>' +
+      '<div style="display:flex;justify-content:center;align-items:center;gap:16px;margin-top:6px">' +
+        '<button onclick="galleryPrev()" id="galleryPrevBtn" disabled style="padding:6px 16px;border:1px solid var(--border);border-radius:6px;background:var(--bg);cursor:pointer;font-size:16px;color:var(--text)">‹</button>' +
+        '<span id="galleryCounter" style="font-size:13px;color:var(--text-muted);min-width:50px;text-align:center">1/' + window.photoGallery.length + '</span>' +
+        '<button onclick="galleryNext()" id="galleryNextBtn" style="padding:6px 16px;border:1px solid var(--border);border-radius:6px;background:var(--bg);cursor:pointer;font-size:16px;color:var(--text)">›</button>' +
+      '</div>' +
+      '<div style="display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-top:8px">';
+    for (var j = 0; j < window.photoGallery.length; j++) {
+      html += '<span id="gDot_' + j + '" onclick="galleryJump(' + j + ')" style="width:7px;height:7px;border-radius:50%;background:#ccc;cursor:pointer;display:inline-block"></span>';
     }
-    html += '</div>';
+    html += '</div></div>';
   }
   
   var arr = null;
