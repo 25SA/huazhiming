@@ -1529,6 +1529,49 @@ function showMemories(school) {
   area.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
+// Preload all images in background after page loads
+function preloadAllImages() {
+  var urls = [];
+  // photo gallery
+  if (window.photoGallery) {
+    for (var i = 0; i < window.photoGallery.length; i++)
+      urls.push(window.photoGallery[i].src);
+  }
+  // politics
+  if (window.politicsData) {
+    for (var i = 0; i < window.politicsData.length; i++) {
+      if (window.politicsData[i].img) urls.push(window.politicsData[i].img);
+    }
+  }
+  // history
+  if (window.historyData) {
+    for (var i = 0; i < window.historyData.length; i++) {
+      if (window.historyData[i].img) urls.push(window.historyData[i].img);
+    }
+  }
+  // social
+  if (window.socialData) {
+    for (var i = 0; i < window.socialData.length; i++) {
+      if (window.socialData[i].img) urls.push(window.socialData[i].img);
+    }
+  }
+  // deduplicate
+  var seen = {};
+  for (var i = 0; i < urls.length; i++) {
+    if (seen[urls[i]]) continue;
+    seen[urls[i]] = true;
+    var img = new Image();
+    img.src = urls[i];
+  }
+}
+
+// Start preloading after page fully loads
+if (window.addEventListener) {
+  window.addEventListener('load', function() { setTimeout(preloadAllImages, 500); });
+} else {
+  window.onload = function() { setTimeout(preloadAllImages, 500); };
+}
+
 // Apply saved theme on load
 (function() {
   var theme = localStorage.getItem('huazhiming_theme');
