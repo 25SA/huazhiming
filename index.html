@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>华志明 · 个人主页</title>
+<link rel="preconnect" href="https://25sa.github.io">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   
@@ -527,24 +528,6 @@
     object-fit: cover;
     display: block;
   }
-  .lazy-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    animation: fadeImg 0.4s ease-out;
-  }
-  @keyframes fadeImg {
-    from { opacity: 0.3; }
-    to { opacity: 1; }
-  }
-  .politics-img .lazy-img img {
-    width: 100%;
-    height: auto;
-    max-height: 300px;
-    object-fit: contain;
-  }
-
   .lightbox-overlay {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -1251,37 +1234,6 @@ function toggleNote(i) {
     t.innerHTML = "📖 展开全文";
   }
 }
-
-function lazyLoadObserve() {
-  var imgs = document.querySelectorAll('.lazy-img');
-  for (var i = 0; i < imgs.length; i++) {
-    (function(el) {
-      var rect = el.getBoundingClientRect();
-      var vh = window.innerHeight;
-      if (rect.top < vh + 200) {
-        var src = el.getAttribute('data-src');
-        if (src && !el.getAttribute('data-loaded')) {
-          var img = new Image();
-          img.onload = function() {
-            el.innerHTML = '';
-            el.style.background = 'none';
-            el.style.minHeight = '0';
-            el.appendChild(img);
-          };
-          img.src = src;
-          el.setAttribute('data-loaded', '1');
-        }
-      }
-    })(imgs[i]);
-  }
-}
-
-var lazyScrollTimer = null;
-window.addEventListener('scroll', function() {
-  if (lazyScrollTimer) clearTimeout(lazyScrollTimer);
-  lazyScrollTimer = setTimeout(lazyLoadObserve, 200);
-});
-
 function handleTag(key) {
   var desc = document.getElementById("tagDesc");
   if (!desc) { log("tagDesc not found!"); return; }
@@ -1297,7 +1249,7 @@ function handleTag(key) {
     for (var i = 0; i < window.photoGallery.length; i++) {
       var p = window.photoGallery[i];
       html += '<div class="photo-item" onclick="openLightbox(' + i + ')">' +
-        '<div class="lazy-img" data-src="' + p.src + '" style="background:#eef1f5;min-height:180px;display:flex;align-items:center;justify-content:center;color:#999;font-size:13px;border-radius:8px">加载中…</div>' +
+        '<img src="' + p.src + '" alt="' + p.name + '" loading="lazy" style="width:100%;height:180px;object-fit:cover;border-radius:8px;display:block">' +
         '</div>';
     }
     html += '</div>';
@@ -1336,7 +1288,7 @@ function handleTag(key) {
           '<div class="notes-header"><span class="notes-tag">' + n.tag + '</span><span class="notes-date">' + n.date + '</span></div>' +
           '<div class="notes-title">' + n.title + '</div>' +
           '<div class="notes-desc-short">' + n.desc + '</div>' +
-          (n.img ? '<div class="politics-img"><div class="lazy-img" data-src="' + n.img + '" style="background:#eef1f5;min-height:120px;display:flex;align-items:center;justify-content:center;color:#999;font-size:12px;border-radius:6px">加载中…</div></div>' : '') +
+          (n.img ? '<div class="politics-img"><img src="' + n.img + '" alt="" loading="lazy" style="max-width:100%;border-radius:6px"></div>' : '') +
           '</div>';
       }
       html += '</div>';
@@ -1344,7 +1296,6 @@ function handleTag(key) {
   }
   
   desc.innerHTML = html;
-  lazyLoadObserve();
   log("tag clicked: " + key);
 }
 
@@ -1526,13 +1477,12 @@ function renderSchoolContent(school) {
       var item = photos[i];
       var el = document.createElement('div');
       el.className = 'mem-item';
-      el.innerHTML = '<div class="lazy-img" data-src="' + item.src + '" style="background:#eef1f5;min-height:150px;display:flex;align-items:center;justify-content:center;color:#999;font-size:12px;border-radius:6px">加载中…</div>';
+      el.innerHTML = '<img src="' + item.src + '" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">';
       pgrid.appendChild(el);
     }
   } else {
     document.getElementById('memoriesPhotos').style.display = 'none';
   }
-  setTimeout(lazyLoadObserve, 100);
 }
 
 function showMemories(school) {
