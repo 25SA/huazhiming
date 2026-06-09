@@ -173,48 +173,81 @@
   }
 
   /* Education */
-  .edu-list,
   .exp-list {
     display: flex;
     flex-direction: column;
     gap: 20px;
   }
 
-  .edu-item {
+  /* Timeline - Education */
+  .timeline {
+    position: relative;
+    padding: 12px 0;
+    margin: 8px 0;
+  }
+  .tl-track {
+    position: absolute;
+    left: 72px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--gold-light), var(--gold));
+    border-radius: 2px;
+    opacity: 0.6;
+  }
+  .tl-dot {
+    position: absolute;
+    left: 72px;
+    width: 11px;
+    height: 11px;
+    background: var(--gold);
+    border-radius: 50%;
+    transform: translateX(-4px);
+    border: 2px solid var(--bg);
+    z-index: 1;
+    box-shadow: 0 0 0 2px var(--gold-light);
+  }
+  .tl-dot-top { top: 20px; }
+  .tl-dot-bottom { bottom: 18px; }
+  .tl-item {
     display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 8px 16px;
-    padding: 20px 24px;
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    transition: box-shadow 0.25s ease, transform 0.25s ease;
+    gap: 0;
+    margin-bottom: 6px;
+    padding: 10px 0;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s ease;
   }
-
-  .edu-item:hover {
-    box-shadow: 0 4px 16px var(--shadow);
-    transform: translateY(-2px);
+  .tl-item:hover {
+    transform: translateX(4px);
   }
-
-  .edu-item .school {
+  .tl-left {
+    width: 76px;
+    flex-shrink: 0;
+    text-align: right;
+    padding-right: 20px;
+    padding-top: 2px;
+  }
+  .tl-year {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy-light);
+    letter-spacing: 0.03em;
+  }
+  .tl-right {
+    flex: 1;
+    padding-left: 24px;
+  }
+  .tl-school {
     font-size: 16px;
     font-weight: 600;
     color: var(--navy);
+    line-height: 1.5;
   }
-
-  .edu-item .period {
+  .tl-detail {
     font-size: 13px;
-    color: var(--gold);
-    font-weight: 500;
-    letter-spacing: 0.02em;
-  }
-
-  .edu-item .major {
-    font-size: 14px;
     color: var(--text-muted);
-    width: 100%;
-    margin-top: 2px;
+    margin-top: 1px;
   }
 
   /* Experience */
@@ -557,7 +590,47 @@
     line-height: 1.7;
     font-style: italic;
   }
-  .notes-body {
+:root[data-theme="dark"] {
+    --navy: #8BAAD4;
+    --navy-light: #A8C4E8;
+    --navy-dark: #D0DCE8;
+    --gold: #D4B96A;
+    --gold-light: #E8DCA8;
+    --text: #E0E4E8;
+    --text-muted: #8A9AA8;
+    --bg: #121820;
+    --section-bg: #18202A;
+    --section-alt: #1E2835;
+    --border: #2A3440;
+    --shadow: rgba(0, 0, 0, 0.2);
+    --shadow-hover: rgba(0, 0, 0, 0.35);
+  }
+
+  /* Theme toggle */
+  .theme-toggle {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: var(--bg);
+    border: 2px solid var(--gold-light);
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px var(--shadow-hover);
+    line-height: 1;
+  }
+  .theme-toggle:hover {
+    transform: scale(1.1) rotate(15deg);
+    box-shadow: 0 6px 24px var(--shadow-hover);
+  }  .notes-body {
     position: relative;
     margin: 6px 0 2px 0;
   }
@@ -616,7 +689,43 @@
     color: var(--text-muted);
     line-height: 1.6;
   }
-</style>
+
+  /* Dark mode overrides for specific elements */
+  :root[data-theme="dark"] .notes-body-inner {
+    color: #C8D0D8;
+  }
+  :root[data-theme="dark"] .notes-fade {
+    background: linear-gradient(to bottom, transparent, var(--bg));
+  }
+  :root[data-theme="dark"] .notes-item,
+  :root[data-theme="dark"] .exp-item,
+  :root[data-theme="dark"] .guestbook-item {
+    background: var(--section-alt);
+  }
+  :root[data-theme="dark"] .hero {
+    background: linear-gradient(160deg, #121820 0%, #18202A 50%, #1E2835 100%);
+  }
+  :root[data-theme="dark"] .edu-item:hover {
+    background: var(--section-alt);
+  }
+  :root[data-theme="dark"] .hero::before {
+    background: radial-gradient(ellipse at 20% 50%, rgba(139, 170, 212, 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(212, 185, 106, 0.06) 0%, transparent 50%);
+  }
+  :root[data-theme="dark"] section:nth-child(even) {
+    background: var(--section-bg);
+  }
+  :root[data-theme="dark"] section:nth-child(odd):not(:first-of-type) {
+    background: var(--bg);
+  }
+  :root[data-theme="dark"] .tl-school {
+    color: var(--navy);
+  }
+  :root[data-theme="dark"] .guestbook-form textarea {
+    background: var(--section-alt);
+    color: var(--text);
+    border-color: var(--border);
+  }</style>
 </head>
 <body>
 
@@ -638,17 +747,38 @@
   <div class="container">
     <div class="section-label">Education</div>
     <h2 class="section-title">教育经历</h2>
-    <div class="edu-list">
-      <div class="edu-item">
-        <div class="school">兰州大学</div>
-        <div class="period">2026至今</div>
-        <div class="major">法律硕士</div>
+    <div class="timeline">
+      <div class="tl-track"></div>
+      <div class="tl-dot tl-dot-top"></div>
+      <div class="tl-item">
+        <div class="tl-left"><span class="tl-year">2026 – </span></div>
+        <div class="tl-right">
+          <div class="tl-school">兰州大学</div>
+          <div class="tl-detail">法律硕士</div>
+        </div>
       </div>
-      <div class="edu-item">
-        <div class="school">天津财经大学</div>
-        <div class="period">2021 – 2025</div>
-        <div class="major">本科</div>
+      <div class="tl-item">
+        <div class="tl-left"><span class="tl-year">2021 – 2025</span></div>
+        <div class="tl-right">
+          <div class="tl-school">天津财经大学</div>
+          <div class="tl-detail">本科</div>
+        </div>
       </div>
+      <div class="tl-item">
+        <div class="tl-left"><span class="tl-year">2018 – 2021</span></div>
+        <div class="tl-right">
+          <div class="tl-school">西乡第一中学</div>
+          <div class="tl-detail">高中</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-left"><span class="tl-year">2015 – 2018</span></div>
+        <div class="tl-right">
+          <div class="tl-school">西乡第五中学</div>
+          <div class="tl-detail">初中</div>
+        </div>
+      </div>
+      <div class="tl-dot tl-dot-bottom"></div>
     </div>
   </div>
 </section>
@@ -1023,8 +1153,33 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 log("script loaded");
+
+function toggleTheme() {
+  var root = document.documentElement;
+  var btn = document.getElementById('themeToggle');
+  if (root.getAttribute('data-theme') === 'dark') {
+    root.removeAttribute('data-theme');
+    localStorage.setItem('huazhiming_theme', 'light');
+    if (btn) btn.textContent = '☀️';
+  } else {
+    root.setAttribute('data-theme', 'dark');
+    localStorage.setItem('huazhiming_theme', 'dark');
+    if (btn) btn.textContent = '🌙';
+  }
+}
+// Apply saved theme on load
+(function() {
+  var theme = localStorage.getItem('huazhiming_theme');
+  if (theme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    var btn = document.getElementById('themeToggle');
+    if (btn) btn.textContent = '🌙';
+  }
+})();
 </script>
 
+<!-- Theme Toggle -->
+<button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="切换主题">☀️</button>
 </body>
 </html>
 
