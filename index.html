@@ -382,33 +382,7 @@
 
 
 
-  /* Social Links */
-  .social-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  .social-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 20px;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    background: #fff;
-    text-decoration: none;
-    color: var(--text);
-    font-size: 14px;
-    transition: all 0.25s ease;
-    min-width: 120px;
-  }
-
-  .social-item:hover {
-    border-color: var(--navy-light);
-    box-shadow: 0 4px 16px var(--shadow);
-    transform: translateY(-2px);
-  }
+  
 
   .social-icon {
     font-size: 18px;
@@ -419,33 +393,7 @@
     color: var(--navy);
   }
 
-  /* Social Links */
-  .social-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  .social-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 20px;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    background: #fff;
-    text-decoration: none;
-    color: var(--text);
-    font-size: 14px;
-    transition: all 0.25s ease;
-    min-width: 120px;
-  }
-
-  .social-item:hover {
-    border-color: var(--navy-light);
-    box-shadow: 0 4px 16px var(--shadow);
-    transform: translateY(-2px);
-  }
+  
 
   .social-icon {
     font-size: 18px;
@@ -601,50 +549,35 @@
     text-decoration: none;
   }
 
-  /* Social Lock */
-  .social-locked {
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 30px 24px;
-    text-align: center;
-  }
+  
 
-  .social-lock-icon {
-    font-size: 32px;
-    margin-bottom: 10px;
-  }
-
-  .social-lock-text {
-    font-size: 14px;
-    color: var(--navy);
-    margin-bottom: 16px;
-    font-weight: 500;
-  }
-
-  .social-lock-input-row {
+  /* Guestbook */
+  .guestbook-form {
     display: flex;
-    gap: 8px;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
   }
-
-  .social-password-input {
-    padding: 8px 14px;
+  .guest-input, .guest-textarea {
+    padding: 10px 14px;
     border: 1px solid var(--border);
     border-radius: 8px;
     font-size: 14px;
-    width: 180px;
+    font-family: inherit;
     outline: none;
     transition: border 0.2s;
+    width: 100%;
   }
-
-  .social-password-input:focus {
+  .guest-input:focus, .guest-textarea:focus {
     border-color: var(--navy);
   }
-
-  .social-unlock-btn {
-    padding: 8px 20px;
+  .guest-textarea {
+    resize: vertical;
+    min-height: 60px;
+  }
+  .guest-submit {
+    align-self: flex-end;
+    padding: 8px 24px;
     background: var(--navy);
     color: #fff;
     border: none;
@@ -653,9 +586,106 @@
     cursor: pointer;
     transition: background 0.2s;
   }
-
-  .social-unlock-btn:hover {
+  .guest-submit:hover {
     background: var(--navy-light);
+  }
+  .guest-entry {
+    padding: 14px 16px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 10px;
+  }
+  .guest-entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .guest-entry-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--navy-dark);
+  }
+  .guest-entry-time {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  .guest-entry-msg {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+  .guest-entry-actions {
+    display: flex;
+    gap: 12px;
+  }
+  .guest-reply-btn {
+    font-size: 13px;
+    color: var(--navy-light);
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .guest-reply-btn:hover {
+    opacity: 1;
+  }
+  .guest-reply {
+    margin: 6px 0 6px 16px;
+    padding: 8px 12px;
+    background: rgba(28,58,94,0.04);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .guest-reply-author {
+    font-weight: 600;
+    color: var(--navy);
+    margin-right: 6px;
+  }
+  .guest-reply-text {
+    color: var(--text);
+  }
+  .guest-reply-time {
+    display: block;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+  .guest-reply-box {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    margin: 8px 0 8px 16px;
+  }
+  .reply-input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: inherit;
+    resize: vertical;
+    outline: none;
+    min-height: 36px;
+  }
+  .reply-input:focus {
+    border-color: var(--navy);
+  }
+  .reply-submit {
+    padding: 8px 16px;
+    background: var(--gold);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .reply-submit:hover {
+    background: #b8963a;
   }
 
   .social-lock-error {
@@ -794,8 +824,7 @@
       <span class="skill-tag" onclick="handleTag('history')" data-tag="history">📜 历史</span>
       <span class="skill-tag" onclick="handleTag('politics')" data-tag="politics">🌐 时政</span>
       <span class="skill-tag" onclick="handleTag('notes')" data-tag="notes">📝 札记</span>
-      <span class="skill-tag" onclick="handleTag('social')" data-tag="social">📚 社科</span>
-    </div>
+          </div>
     <div class="tag-desc" id="tagDesc">
       <p>点击标签了解我的兴趣方向</p>
     </div>
@@ -821,38 +850,20 @@
   </div>
 </section>
 
-<!-- Social Links -->
+<!-- Guestbook -->
 <section>
   <div class="container">
-    <div class="section-label">Social</div>
-    <h2 class="section-title">社交平台</h2>
-    <div class="social-locked" id="socialLocked">
-      <div class="social-lock-icon">🔒</div>
-      <div class="social-lock-text">我的高中</div>
-      <div class="social-lock-input-row">
-        <input type="password" id="socialPassword" class="social-password-input" placeholder="输入答案" autocomplete="off">
-        <button class="social-unlock-btn" onclick="unlockSocial()">验证</button>
-      </div>
-      <div class="social-lock-error" id="socialError"></div>
+    <div class="section-label">互动</div>
+    <h2 class="section-title">留言板</h2>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">欢迎留言交流，你也可以对我的回复给出回应。</p>
+    <div class="guestbook-form">
+      <input type="text" id="guestName" class="guest-input" placeholder="你的昵称" maxlength="20">
+      <textarea id="guestMsg" class="guest-textarea" placeholder="写下你想说的…" rows="3" maxlength="500"></textarea>
+      <button class="guest-submit" onclick="submitGuestbook()">发布留言</button>
     </div>
-    <div class="social-links" id="socialContent" style="display:none;">
-      <a href="https://weibo.com/u/7435465898" target="_blank" rel="noopener" class="social-item">
-        <span class="social-icon">📱</span>
-        <span class="social-name">微博</span>
-      </a>
-      <a href="https://www.xiaohongshu.com/user/profile/62f07afa000000001e01e02d" target="_blank" rel="noopener" class="social-item">
-        <span class="social-icon">📕</span>
-        <span class="social-name">小红书</span>
-      </a>
-      <a href="https://b23.tv/zb3GwJc" target="_blank" rel="noopener" class="social-item">
-        <span class="social-icon">📺</span>
-        <span class="social-name">哔哩哔哩</span>
-      </a>
-    </div>
+    <div class="guestbook-list" id="guestbookList"></div>
   </div>
-</section>
-
-<footer>
+</section><footer>
   <div class="container">
     <span>© 2026 华志明</span>
     <span style="font-size:11px; opacity:0.6;">Built with care</span>
@@ -1004,30 +1015,107 @@ function openLightbox(index) {
   document.body.appendChild(overlay);
 }
 
-function unlockSocial() {
-  var answer = "xxyz";
-  var input = document.getElementById("socialPassword");
-  var error = document.getElementById("socialError");
-  if (input && input.value.trim() === answer) {
-    var locked = document.getElementById("socialLocked");
-    var content = document.getElementById("socialContent");
-    if (locked) locked.style.display = "none";
-    if (content) content.style.display = "flex";
-    log("social unlocked");
-  } else {
-    if (error) error.textContent = "答案错误，请重试";
-    if (input) { input.value = ""; input.focus(); }
+function submitGuestbook() {
+  var name = document.getElementById("guestName");
+  var msg = document.getElementById("guestMsg");
+  if (!name || !msg) return;
+  var n = name.value.trim() || "匿名";
+  var m = msg.value.trim();
+  if (!m) { alert("请输入留言内容"); return; }
+  
+  var entries = JSON.parse(localStorage.getItem("huazhiming_guestbook") || "[]");
+  entries.unshift({
+    id: Date.now(),
+    name: n,
+    msg: m,
+    time: new Date().toLocaleString("zh-CN"),
+    replies: []
+  });
+  localStorage.setItem("huazhiming_guestbook", JSON.stringify(entries));
+  name.value = "";
+  msg.value = "";
+  renderGuestbook();
+}
+
+function replyGuest(id) {
+  var replyBox = document.getElementById("replyBox_" + id);
+  if (!replyBox) return;
+  if (replyBox.style.display === "block") {
+    replyBox.style.display = "none";
+    return;
   }
+  replyBox.style.display = "block";
+  replyBox.querySelector(".reply-input").focus();
+}
+
+function submitReply(id) {
+  var replyBox = document.getElementById("replyBox_" + id);
+  if (!replyBox) return;
+  var input = replyBox.querySelector(".reply-input");
+  var text = input.value.trim();
+  if (!text) { alert("请输入回复内容"); return; }
+  
+  var entries = JSON.parse(localStorage.getItem("huazhiming_guestbook") || "[]");
+  for (var i = 0; i < entries.length; i++) {
+    if (entries[i].id === id) {
+      entries[i].replies.push({
+        text: text,
+        time: new Date().toLocaleString("zh-CN")
+      });
+      break;
+    }
+  }
+  localStorage.setItem("huazhiming_guestbook", JSON.stringify(entries));
+  renderGuestbook();
+}
+
+function renderGuestbook() {
+  var list = document.getElementById("guestbookList");
+  if (!list) return;
+  var entries = JSON.parse(localStorage.getItem("huazhiming_guestbook") || "[]");
+  if (entries.length === 0) {
+    list.innerHTML = '<div style="text-align:center;padding:30px 0;color:var(--text-muted);font-size:14px;">还没有留言，来写下第一条吧 ✍️</div>';
+    return;
+  }
+  var html = "";
+  for (var i = 0; i < entries.length; i++) {
+    var e = entries[i];
+    html += '<div class="guest-entry">' +
+      '<div class="guest-entry-header">' +
+        '<span class="guest-entry-name">' + escapeHtml(e.name) + '</span>' +
+        '<span class="guest-entry-time">' + e.time + '</span>' +
+      '</div>' +
+      '<div class="guest-entry-msg">' + escapeHtml(e.msg) + '</div>';
+    
+    if (e.replies && e.replies.length > 0) {
+      for (var j = 0; j < e.replies.length; j++) {
+        var r = e.replies[j];
+        html += '<div class="guest-reply">' +
+          '<span class="guest-reply-author">华志明</span>' +
+          '<span class="guest-reply-text">' + escapeHtml(r.text) + '</span>' +
+          '<span class="guest-reply-time">' + r.time + '</span>' +
+        '</div>';
+      }
+    }
+    
+    html += '<div class="guest-reply-box" id="replyBox_' + e.id + '" style="display:none;">' +
+      '<textarea class="reply-input" placeholder="写下回复…" rows="2"></textarea>' +
+      '<button class="reply-submit" onclick="submitReply(' + e.id + ')">回复</button>' +
+    '</div>';
+    
+    html += '<div class="guest-entry-actions">' +
+      '<span class="guest-reply-btn" onclick="replyGuest(' + e.id + ')">💬 回复</span>' +
+    '</div></div>';
+  }
+  list.innerHTML = html;
+}
+
+function escapeHtml(s) {
+  return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-  var pw = document.getElementById("socialPassword");
-  if (pw) {
-    pw.addEventListener("keydown", function(e) {
-      if (e.key === "Enter") unlockSocial();
-    });
-  }
-  log("DOM ready, " + document.querySelectorAll(".skill-tag").length + " tags found");
+  renderGuestbook();
 });
 
 log("script loaded");
