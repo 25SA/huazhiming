@@ -668,17 +668,16 @@
   }
   .memories-grid .mem-item {
     border-radius: 10px;
-    overflow: hidden;
     cursor: pointer;
     transition: transform 0.2s ease;
-    aspect-ratio: 1;
     background: var(--section-bg);
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
     color: var(--text-muted);
     font-size: 13px;
     border: 1px dashed var(--border);
+    min-height: 150px;
   }
   .memories-grid .mem-item:hover {
     transform: scale(1.03);
@@ -692,6 +691,7 @@
     display: block;
     user-select: none;
     -webkit-user-drag: none;
+    flex-shrink: 0;
   }
   .exp-photo {
     user-select: none;
@@ -1514,7 +1514,7 @@ function renderSchoolContent(school) {
       var item = videos[i];
       var el = document.createElement('div');
       el.className = 'mem-item';
-      var creditHtml = item.credit ? '<div style="font-size:12px;color:#999;margin-top:4px">' + item.credit + '</div>' : '';
+      var creditHtml = item.credit ? '<div style="font-size:12px;color:#999;padding:6px 8px 8px;line-height:1.4">' + item.credit + '</div>' : '';
       el.innerHTML = '<video src="' + item.src + '" controls controlsList="nodownload" disablePictureInPicture></video>' + creditHtml;
       vgrid.appendChild(el);
     }
