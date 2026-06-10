@@ -1403,6 +1403,40 @@ function openLightbox(index) {
 }
 
 
+// ==== Preload all tab images at page load ====
+function preloadTabImages() {
+  var urls = [];
+  // photo gallery
+  if (window.photoGallery) {
+    for (var i = 0; i < window.photoGallery.length; i++) {
+      urls.push(window.photoGallery[i].src);
+    }
+  }
+  // politicsData
+  if (window.politicsData) {
+    for (var i = 0; i < window.politicsData.length; i++) {
+      if (window.politicsData[i].img) urls.push(window.politicsData[i].img);
+    }
+  }
+  // school memories (images only, not videos)
+  if (window.schoolMemories) {
+    var schools = Object.keys(window.schoolMemories);
+    for (var s = 0; s < schools.length; s++) {
+      var items = window.schoolMemories[schools[s]];
+      for (var i = 0; i < items.length; i++) {
+        if (items[i].type === 'image') urls.push(items[i].src);
+      }
+    }
+  }
+  // Start silent preload
+  for (var i = 0; i < urls.length; i++) {
+    var img = new Image();
+    img.src = urls[i];
+  }
+  log("preloaded " + urls.length + " images");
+}
+preloadTabImages();
+
 function escapeHtml(s) {
   return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 }
