@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>华志明 · 个人主页</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --navy: #1C3A5E;
+    --navy-dark: #0F2440;
+    --gold: #C9A84C;
+    --text: #1A1A1A;
+    --bg: #FFFFFF;
+    --card-bg: #F5F6F8;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans SC", sans-serif;
+    background: var(--bg);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 420px;
+    background: var(--bg);
+    border-radius: 28px;
+    padding: 48px 36px 40px;
+    box-shadow: 
+      0 2px 40px rgba(28,58,94,0.08),
+      0 8px 32px rgba(28,58,94,0.06);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Decorative top line */
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 60px;
+    width: 120px;
+    height: 4px;
+    background: var(--gold);
+    border-radius: 0 0 4px 4px;
+  }
+
+  /* Decorative left line */
+  .card::after {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 40px;
+    width: 3px;
+    height: 80%;
+    background: var(--gold);
+    border-radius: 3px;
+    opacity: 0.3;
+  }
+
+  .accent {
+    position: absolute;
+    top: 32px;
+    right: 32px;
+    width: 40px;
+    height: 40px;
+  }
+  .accent .outer {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--gold);
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .accent .inner {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--navy);
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
+
+  .name {
+    font-size: 52px;
+    font-weight: 700;
+    color: var(--navy-dark);
+    letter-spacing: 2px;
+    margin-top: 12px;
+    line-height: 1.2;
+  }
+
+  .subtitle {
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-top: 4px;
+    letter-spacing: 4px;
+  }
+
+  .divider {
+    width: 140px;
+    height: 2px;
+    background: var(--gold);
+    margin: 28px 0;
+  }
+
+  .url {
+    font-size: 20px;
+    color: #888;
+    letter-spacing: 1px;
+    font-weight: 400;
+  }
+
+  .tagline {
+    font-size: 18px;
+    color: var(--gold);
+    margin-top: 20px;
+    font-weight: 300;
+    letter-spacing: 2px;
+  }
+
+  /* QR Area */
+  .qr-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 32px;
+    padding: 24px 0 4px;
+    border-top: 1px solid #F0F0F0;
+  }
+
+  #qrCanvas {
+    width: 180px;
+    height: 180px;
+  }
+
+  .qr-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 10px 24px;
+    background: #F5F6F8;
+    border-radius: 24px;
+    font-size: 15px;
+    color: var(--navy);
+    font-weight: 500;
+  }
+  .qr-label .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  /* Visit button */
+  .visit-btn {
+    display: block;
+    width: 100%;
+    margin-top: 24px;
+    padding: 16px;
+    background: var(--navy);
+    color: #fff;
+    border: none;
+    border-radius: 16px;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-decoration: none;
+    text-align: center;
+    letter-spacing: 2px;
+  }
+  .visit-btn:hover {
+    background: var(--navy-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(28,58,94,0.2);
+  }
+  .visit-btn:active {
+    transform: scale(0.98);
+  }
+
+  .footer-dots {
+    display: flex;
+    gap: 16px;
+    margin-top: 28px;
+    align-items: center;
+  }
+  .footer-dots span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  /* Share hint */
+  .share-hint {
+    margin-top: 24px;
+    font-size: 13px;
+    color: #bbb;
+    text-align: center;
+  }
+
+  @media (max-width: 480px) {
+    .card { padding: 36px 28px 32px; }
+    .name { font-size: 40px; }
+    .subtitle { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="accent">
+    <div class="outer"></div>
+    <div class="inner"></div>
+  </div>
+
+  <div class="name">华志明</div>
+  <div class="subtitle">个人主页</div>
+  <div class="divider"></div>
+  <div class="url">25sa.github.io</div>
+  <div class="tagline">往前看，向上走，在路上</div>
+
+  <div class="qr-area">
+    <canvas id="qrCanvas"></canvas>
+    <div class="qr-label">
+      <span>📱 扫码访问主页</span>
+      <span class="dot"></span>
+    </div>
+  </div>
+
+  <a class="visit-btn" href="https://25sa.github.io" target="_blank" rel="noopener">
+    打开主页 →
+  </a>
+
+  <div class="footer-dots">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<div class="share-hint">截图分享给朋友，二维码扫码直接访问</div>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script>
+  new QRCode(document.getElementById('qrCanvas'), {
+    text: 'https://25sa.github.io',
+    width: 180,
+    height: 180,
+    colorDark: '#0F2440',
+    colorLight: '#FFFFFF',
+    correctLevel: QRCode.CorrectLevel.H
+  });
+</script>
+</body>
+</html>
